@@ -5,6 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:ConfigApp"
+        xmlns:ui="http://schemas.modernwpf.com/2019"  
+        ui:WindowHelper.UseModernWindowStyle="True"
         x:Class="ConfigApp.MainWindow"
         mc:Ignorable="d"
         Title="ChaosModV Configuration" Height="510" Width="1060" ResizeMode="NoResize">
