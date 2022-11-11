@@ -43,7 +43,7 @@
                     <ui:FontIcon Glyph="&#xE7C8;"/>
                 </ui:NavigationViewItem.Icon>
             </ui:NavigationViewItem>
-            <ui:NavigationViewItem Content="Misc" 
+            <ui:NavigationViewItem Content="More" 
                                    x:Name="nav_more_selection">
                 <ui:NavigationViewItem.Icon>
                     <ui:FontIcon Glyph="&#xEA1F;"/>
