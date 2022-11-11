@@ -388,39 +388,47 @@
             </Grid>
 
             <Grid Visibility="{Binding IsSelected, ElementName=nav_more_selection, Converter={StaticResource boolToVisibility}}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="310" />
-                    <ColumnDefinition Width="10" />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
+                <Grid.Resources>
+                    <Style TargetType="Rectangle" x:Key="decoratedBackground">
+                        <Setter Property="Fill" Value="{DynamicResource CommandBarBackground}"/>
+                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                        <Setter Property="Margin" Value="4"/>
+                        <Setter Property="Height" Value="64"/>
+                    </Style>
+                    <Style TargetType="Label" BasedOn="{StaticResource DefaultLabelStyle}">
+                        <Setter Property="Margin" Value="18"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                    </Style>
+                    <Style TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
+                        <Setter Property="Margin" Value="18"/>
+                        <Setter Property="HorizontalAlignment" Value="Right"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                    </Style>
+                </Grid.Resources>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="40" />
-                    <RowDefinition Height="40" />
-                    <RowDefinition Height="40" />
-                    <RowDefinition Height="40" />
-                    <RowDefinition />
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
+                <Rectangle Style="{StaticResource decoratedBackground}"/>
+                <Label Content="Visit the mod page for more information"/>
+                <Button Content="GTA5-Mods" Click="contribute_modpage_click" />
+                
+                <Rectangle Style="{StaticResource decoratedBackground}" Grid.Row="1"/>
+                <Label Content="Enjoying the mod? Buy me a coffee! :)" Grid.Row="1"
+                       Margin="18" VerticalAlignment="Center" />
+                <Button Content="PayPal" Grid.Row="1" Margin="18"
+                        HorizontalAlignment="Right" VerticalAlignment="Center"
+                        Click="contribute_donate_click" />
 
-                <Label Content="Visit the mod page for more information" Grid.Row="0" Grid.Column="0"
-                               HorizontalAlignment="Right" VerticalAlignment="Center" />
-                <Button Content="GTA5-Mods" Width="75" Grid.Row="0" Grid.Column="2"
-                                HorizontalAlignment="Left" VerticalAlignment="Center"
-                                Click="contribute_modpage_click" />
-                <Label Content="Enjoying the mod? Buy me a coffee! :)" Grid.Row="1" Grid.Column="0"
-                               HorizontalAlignment="Right" VerticalAlignment="Center" />
-                <Button Content="PayPal" Width="75" Grid.Row="1" Grid.Column="2"
-                                HorizontalAlignment="Left" VerticalAlignment="Center"
-                                Click="contribute_donate_click" />
-                <Label Content="Want to contribute to the mod? It's open source!" Grid.Row="2" Grid.Column="0"
-                               HorizontalAlignment="Right" VerticalAlignment="Center" />
-                <Button Content="GitHub" Width="75" Grid.Row="2" Grid.Column="2"
-                                HorizontalAlignment="Left" VerticalAlignment="Center"
-                                Click="contribute_github_click" />
-                <Label Content="Join our Discord for announcements, support and more!" Grid.Row="3" Grid.Column="0"
-                               HorizontalAlignment="Right" VerticalAlignment="Center" />
-                <Button Content="Discord" Width="75" Grid.Row="3" Grid.Column="2"
-                                HorizontalAlignment="Left" VerticalAlignment="Center"
-                                Click="contribute_discord_click"/>
+                <Rectangle Style="{StaticResource decoratedBackground}" Grid.Row="2"/>
+                <Label Content="Want to contribute to the mod? It's open source!" Grid.Row="2"/>
+                <Button Content="GitHub" Grid.Row="2" Click="contribute_github_click" />
+
+                <Rectangle Style="{StaticResource decoratedBackground}" Grid.Row="3"/>
+                <Label Content="Join our Discord for announcements, support and more!" Grid.Row="3"/>
+                <Button Content="Discord" Grid.Row="3" Click="contribute_discord_click"/>
             </Grid>
         </Grid>
     </ui:NavigationView>
