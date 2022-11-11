@@ -107,6 +107,7 @@
     <Compile Include="EffectData.cs" />
     <Compile Include="EffectsTreeMenuItem.cs" />
     <Compile Include="Info.cs" />
+    <Compile Include="MainWindowVM.cs" />
     <Compile Include="Utils.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

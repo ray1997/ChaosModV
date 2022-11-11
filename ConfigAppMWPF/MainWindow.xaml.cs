@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using Shared; 
@@ -47,8 +49,6 @@ namespace ConfigApp
                 Title += " (v" + Info.VERSION + ")";
             }
 
-            CheckForUpdates();
-
             ParseConfigFile();
             ParseTwitchFile();
 
@@ -77,29 +77,6 @@ namespace ConfigApp
                     "No Write Access", MessageBoxButton.OK, MessageBoxImage.Error);
 
                 Application.Current.Shutdown();
-            }
-        }
-
-        private async void CheckForUpdates()
-        {
-            HttpClient httpClient = new HttpClient();
-
-            try
-            {
-                string newVersion = await httpClient.GetStringAsync("https://gopong.dev/chaos/version.txt");
-
-                if (Info.VERSION != newVersion)
-                {
-                    update_available_button.Visibility = Visibility.Visible;
-                }
-                else
-                {
-                    update_available_label.Content = "You are on the newest version of the mod!";
-                }
-            }
-            catch (HttpRequestException)
-            {
-                update_available_label.Content = "Unable to check for new updates!";
             }
         }
 
@@ -517,6 +494,23 @@ namespace ConfigApp
         private void contribute_discord_click(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Process.Start("https://discord.gg/w2tDeKVaF9");
+        }
+    }
+
+    public class BoolToVisibilityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is bool b)
+            {
+                return b ? Visibility.Visible : Visibility.Collapsed;
+            }
+            return Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
         }
     }
 }
