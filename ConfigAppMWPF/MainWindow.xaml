@@ -248,85 +248,56 @@
                                               SelectedColor="{Binding EffectTimedTimerColor, Mode=TwoWay}" ShowStandardColors="False" UsingAlphaChannel="False" />
                         </StackPanel>
 
-                        <ui:ToggleSwitch x:Name="misc_user_effects_disable_startup"
-                                         ui:ControlHelper.Header="Disable mod on startup by default"
-                                         OnContent="Disable mod on startup"
-                                         OffContent="Enable mod on startup"
-                                         IsOn="{Binding DisableStartup, Mode=TwoWay}"
-                                         Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='8,r,9'}"
-                                         Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='8,c,9'}"/>
+                        <CheckBox Content="Disable mod on startup by default"
+                                  VerticalContentAlignment="Center"
+                                  IsChecked="{Binding DisableStartup, Mode=TwoWay}"
+                                  Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='8,r,9'}"
+                                  Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='8,c,9'}"/>
 
-                        <ui:ToggleSwitch x:Name="misc_user_effects_drawtimer_disable"
-                                         ui:ControlHelper.Header="Don't draw timer bar"
-                                         IsOn="{Binding DisableTimerBarDraw, Mode=TwoWay}"
-                                         OffContent="Timer bar visible"
-                                         OnContent="Timer bar disabled"
-                                         Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='9,r,9'}"
-                                         Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='9,c,9'}"/>
+                        <CheckBox Content="Don't draw timer bar"
+                                  IsChecked="{Binding DisableTimerBarDraw, Mode=TwoWay}"
+                                  Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='9,r,9'}"
+                                  Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='9,c,9'}"/>
                         
-                        <ui:ToggleSwitch x:Name="misc_user_effects_drawtext_disable"
-                                         ui:ControlHelper.Header="Don't draw effect text"
-                                         IsOn="{Binding DisableEffectTextDraw, Mode=TwoWay}"
-                                         OffContent="Effect text visible"
-                                         OnContent="Effect text disabled"
-                                         Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='10,r,9'}"
-                                         Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='10,c,9'}"/>
+                        <CheckBox Content="Don't draw effect text"
+                                  IsChecked="{Binding DisableEffectTextDraw, Mode=TwoWay}"
+                                  Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='10,r,9'}"
+                                  Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='10,c,9'}"/>
                         
-                        <ui:ToggleSwitch x:Name="misc_user_effects_clear_enable"
-                                         ui:ControlHelper.Header="Enable clear active effects shortcut (CTRL + -)"
-                                         IsOn="{Binding EnableClearEffectsShortcut, Mode=TwoWay}"
-                                         OffContent="Shortcut disabled"
-                                         OnContent="Shortcut enabled"
-                                         Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='11,r,9'}"
-                                         Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='11,c,9'}"/>
+                        <CheckBox Content="Enable clear active effects shortcut (CTRL + -)"
+                                  IsChecked="{Binding EnableClearEffectsShortcut, Mode=TwoWay}"
+                                  Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='11,r,9'}"
+                                  Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='11,c,9'}"/>
                         
-                        <ui:ToggleSwitch x:Name="misc_user_toggle_mod_shortcut"
-                                         ui:ControlHelper.Header="Enable toggle mod shortcut (CTRL + L)"
-                                         IsOn="{Binding EnableToggleModShortcut, Mode=TwoWay}"
-                                         OffContent="Shortcut disabled"
-                                         OnContent="Shortcut enabled"
-                                         Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='12,r,9'}"
-                                         Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='12,c,9'}"/>
+                        <CheckBox Content="Enable toggle mod shortcut (CTRL + L)"
+                                  IsChecked="{Binding EnableToggleModShortcut, Mode=TwoWay}"
+                                  Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='12,r,9'}"
+                                  Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='12,c,9'}"/>
                         
-                        <ui:ToggleSwitch x:Name="misc_user_effects_menu_enable"
-                                         ui:ControlHelper.Header="Enable effects menu (allows you to choose effects manually, CTRL + ,)"
-                                         IsOn="{Binding EnableDebugMenu, Mode=TwoWay}"
-                                         OffContent="Shortcut disabled"
-                                         OnContent="Shortcut enabled"
-                                         Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='13,r,9'}"
-                                         Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='13,c,9'}"/>
+                        <CheckBox Content="Enable effects menu (allows you to choose effects manually, CTRL + ,)"
+                                  IsChecked="{Binding EnableDebugMenu, Mode=TwoWay}"
+                                  Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='13,r,9'}"
+                                  Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='13,c,9'}"/>
                         
-                        <ui:ToggleSwitch x:Name="misc_user_effects_timer_pause_shortcut_enable"
-                                         ui:ControlHelper.Header="Enable pause timer shortcut (CTRL + .)"
-                                         IsOn="{Binding EnablePauseTimerShortcut, Mode=TwoWay}"
-                                         OffContent="Shortcut disabled"
-                                         OnContent="Shortcut enabled"
-                                         Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='14,r,9'}"
-                                         Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='14,c,9'}"/>
+                        <CheckBox Content="Enable pause timer shortcut (CTRL + .)"
+                                  IsChecked="{Binding EnablePauseTimerShortcut, Mode=TwoWay}"
+                                  Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='14,r,9'}"
+                                  Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='14,c,9'}"/>
                         
-                        <ui:ToggleSwitch x:Name="misc_user_anti_softlock_shortcut"
-                                         ui:ControlHelper.Header="Enable black screen softlock prevention shortcut (CTRL + SHIFT + K)"
-                                         IsOn="{Binding EnableAntiSoftlockShortcut, Mode=TwoWay}"
-                                         OffContent="Shortcut disabled"
-                                         OnContent="Shortcut enabled"
-                                         Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='15,r,9'}"
-                                         Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='15,c,9'}"/>
+                        <CheckBox Content="Enable black screen softlock prevention shortcut (CTRL + SHIFT + K)"
+                                  IsChecked="{Binding EnableAntiSoftlockShortcut, Mode=TwoWay}"
+                                  Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='15,r,9'}"
+                                  Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='15,c,9'}"/>
                         
-                        <ui:ToggleSwitch x:Name="misc_user_effects_enable_group_weighting"
-                                         ui:ControlHelper.Header="Enable effect group weighting (Recommended)"
-                                         IsOn="{Binding EnableGroupWeightingAdjustments, Mode=TwoWay}"
-                                         OffContent="Effect group weighting enabled"
-                                         OnContent="Effect grounp weighting disabled" 
-                                         Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='16,r,9'}"
-                                         Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='16,c,9'}"/>
+                        <CheckBox Content="Enable effect group weighting (Recommended)"
+                                  IsChecked="{Binding EnableGroupWeightingAdjustments, Mode=TwoWay}"
+                                  Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='16,r,9'}"
+                                  Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='16,c,9'}"/>
                         
-                        <ui:ToggleSwitch x:Name="misc_user_effects_enable_failsafe"
-                                         ui:ControlHelper.Header="Allow prevention of repetitive mission fails (Failsafe)"
-                                         IsOn="{Binding EnableFailsafe, Mode=TwoWay}"
-                                         OffContent="Mission failsafe disallowed"
-                                         OnContent="Mission failsafe allowed" 
-                                         Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='17,r,9'}"
-                                         Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='17,c,9'}"/>
+                        <CheckBox Content="Allow prevention of repetitive mission fails (Failsafe)"
+                                  IsChecked="{Binding EnableFailsafe, Mode=TwoWay}"
+                                  Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='17,r,9'}"
+                                  Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='17,c,9'}"/>
                     </Grid>
                 </ScrollViewer>
             </Grid>
@@ -367,8 +338,11 @@
                                 <Style TargetType="PasswordBox" BasedOn="{StaticResource DefaultPasswordBoxStyle}">
                                     <Setter Property="Margin" Value="12,4"/>
                                 </Style>
-                                <Style TargetType="ui:ToggleSwitch">
+                                <Style TargetType="CheckBox" BasedOn="{StaticResource DefaultCheckBoxStyle}">
                                     <Setter Property="Margin" Value="12,4"/>
+                                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                    <Setter Property="VerticalContentAlignment" Value="Center"/>
                                 </Style>
                                 <Style TargetType="ComboBox" BasedOn="{StaticResource DefaultComboBoxStyle}">
                                     <Setter Property="Margin" Value="12,4"/>
@@ -431,22 +405,19 @@
                                       SelectedIndex="{Binding TwitchVotingOverlayMode, Mode=TwoWay}"
                                       ui:ControlHelper.Header="Voting Overlay Mode"
                                      Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='4,r,4'}"
-                                     Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='4,c,4'}"
-                                      HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                     Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='4,c,4'}">
                                 <sys:String>Chat Messages</sys:String>
                                 <sys:String>In-Game Overlay</sys:String>
                                 <sys:String>OBS Overlay</sys:String>
                             </ComboBox>
 
-                            <ui:ToggleSwitch x:Name="twitch_user_random_voteable_enable"
-                                             IsEnabled="{Binding EnableTwitchVoting}"
-                                             ui:ControlHelper.Header="Enable &quot;Random Effect&quot; voteable option"
-                                             Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='5,r,4'}"
-                                             Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='5,c,4'}"
-                                             IsOn="{Binding TwitchRandomEffectVoteableEnable, Mode=TwoWay}"
-                                             HorizontalAlignment="Stretch" VerticalAlignment="Center" VerticalContentAlignment="Center" 
-                                             OnContent="Random effect is on the list!"
-                                             OffContent="Random effect will not be on the list"/>
+                            <CheckBox x:Name="twitch_user_random_voteable_enable"
+                                      IsEnabled="{Binding EnableTwitchVoting}"
+                                      Content="Enable &quot;Random Effect&quot; voteable option"
+                                      Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='5,r,4'}"
+                                      Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='5,c,4'}"
+                                      IsChecked="{Binding TwitchRandomEffectVoteableEnable, Mode=TwoWay}"
+                                      HorizontalAlignment="Stretch" VerticalAlignment="Center" VerticalContentAlignment="Center" />
 
                             <TextBox x:Name="twitch_permitted_usernames" 
                                      ui:ControlHelper.Header="Permitted Twitch usernames (separated by , )"
@@ -478,23 +449,21 @@
                                    Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='0,r,2'}"
                                    Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='0,c,2'}"/>
 
-                            <ui:ToggleSwitch x:Name="twitch_user_chance_system_enable"
-                                             ui:ControlHelper.Header="Enable proportional voting mode" 
-                                             Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='1,r,2'}"
-                                             Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='1,c,2'}"
-                                             IsEnabled="{Binding EnableTwitchVoting}"
-                                             IsOn="{Binding TwitchVotingChanceSystem, Mode=TwoWay}"
-                                             HorizontalAlignment="Stretch" VerticalAlignment="Center" VerticalContentAlignment="Center" 
-                                             OnContent="Proportional voting enabled"
-                                             OffContent="Proportional voting disabled"/>
+                            <CheckBox x:Name="twitch_user_chance_system_enable"
+                                      Content="Enable proportional voting mode" 
+                                      Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='1,r,2'}"
+                                      Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='1,c,2'}"
+                                      IsEnabled="{Binding EnableTwitchVoting}"
+                                      IsChecked="{Binding TwitchVotingChanceSystem, Mode=TwoWay}"
+                                      HorizontalAlignment="Stretch" VerticalAlignment="Center" VerticalContentAlignment="Center" />
 
-                            <ui:ToggleSwitch x:Name="twitch_user_chance_system_retain_chance_enable" 
-                                             IsEnabled="{Binding EnableTwitchVoting}"
-                                             IsOn="{Binding TwitchVotingChanceSystemRetainChance, Mode=TwoWay}"
-                                             ui:ControlHelper.Header="Effects without votes should never lose their initial chance"
-                                             Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='3,r,2'}"
-                                             Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='2,c,2'}"
-                                             HorizontalAlignment="Stretch" VerticalAlignment="Center" VerticalContentAlignment="Center" />
+                            <CheckBox x:Name="twitch_user_chance_system_retain_chance_enable" 
+                                      IsEnabled="{Binding EnableTwitchVoting}"
+                                      IsChecked="{Binding TwitchVotingChanceSystemRetainChance, Mode=TwoWay}"
+                                      Content="Effects without votes should never lose their initial chance"
+                                      Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='3,r,2'}"
+                                      Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='2,c,2'}"
+                                      HorizontalAlignment="Stretch" VerticalAlignment="Center" VerticalContentAlignment="Center" />
                         </Grid>
                     </Grid>
                 </ScrollViewer>
