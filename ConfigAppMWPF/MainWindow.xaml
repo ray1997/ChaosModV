@@ -17,6 +17,49 @@
     <Window.Resources>
         <local:BoolToVisibilityConverter x:Key="boolToVisibility"/>
         <local:RowSplitConverter x:Key="rcSplit"/>
+
+        <Style TargetType="ui:NumberBox">
+            <Setter Property="Margin" Value="8,4"/>
+            <Setter Property="Maximum" Value="999999"/>
+            <Setter Property="Width" Value="120"/>
+        </Style>
+        <Style TargetType="CheckBox" BasedOn="{StaticResource DefaultCheckBoxStyle}">
+            <Setter Property="Margin" Value="8,4"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="TextBox" BasedOn="{StaticResource DefaultTextBoxStyle}">
+            <Setter Property="Margin" Value="8,4"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="PasswordBox" BasedOn="{StaticResource DefaultPasswordBoxStyle}">
+            <Setter Property="Margin" Value="8,4"/>
+        </Style>
+        <Style TargetType="ComboBox" BasedOn="{StaticResource DefaultComboBoxStyle}">
+            <Setter Property="Margin" Value="8,4"/>
+        </Style>
+        <Style TargetType="Rectangle" x:Key="decoratedBackground">
+            <Setter Property="Fill" Value="{DynamicResource CommandBarBackground}"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="Margin" Value="4"/>
+            <Setter Property="Height" Value="64"/>
+        </Style>
+        <Style TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
+            <Setter Property="Margin" Value="18"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="xctk:ColorPicker">
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Margin" Value="0,0,14,4"/>
+            <Setter Property="ShowStandardColors" Value="False"/>
+            <Setter Property="UsingAlphaChannel" Value="False"/>
+        </Style>
     </Window.Resources>
     <ui:NavigationView IsBackButtonVisible="Collapsed"
                        IsSettingsVisible="False"
@@ -88,94 +131,89 @@
             </Grid>
 
             <Grid Visibility="{Binding IsSelected, ElementName=nav_meta_selection, Converter={StaticResource boolToVisibility}}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="80" />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-
-                <Grid Grid.Row="0">
-                    <Label Content="Meta effects modify various aspects of mod itself on a regular basis to add more variety.&#xA;They are not a part of the normal effects pool; instead, they are automatically dispatched by the mod on a fixed interval (configurable below)."
-                                   Grid.Row="0"
-                                   HorizontalAlignment="Center" VerticalAlignment="Center" />
-                </Grid>
-
-                <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="500" />
-                        <ColumnDefinition Width="300" />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-
-                    <Grid Grid.Column="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="330" />
-                            <ColumnDefinition Width="10" />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
+                <ScrollViewer SizeChanged="RowListingUpdate">
+                    <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="40" />
-                            <RowDefinition Height="40" />
-                            <RowDefinition Height="40" />
+                            <RowDefinition Height="Auto" />
                             <RowDefinition />
                         </Grid.RowDefinitions>
 
-                        <Label Content="How often should a new meta start (in seconds)?" Grid.Row="0" Grid.Column="0"
-                                       HorizontalAlignment="Right" VerticalAlignment="Center" />
-                        <TextBox x:Name="meta_effects_spawn_dur" Height="20" Width="60" Grid.Row="0" Grid.Column="2"
-                                         HorizontalAlignment="Left" VerticalAlignment="Center"
-                                         MaxLength="6" PreviewTextInput="OnlyNumbersPreviewTextInput"
-                                         CommandManager.PreviewExecuted="NoCopyPastePreviewExecuted" ContextMenu="{x:Null}"
-                                         Keyboard.PreviewKeyDown="NoSpacePreviewKeyDown" />
-                        <Label Content="How long should meta effects last (in seconds)?" Grid.Row="1" Grid.Column="0"
-                                       HorizontalAlignment="Right" VerticalAlignment="Center" />
-                        <TextBox x:Name="meta_effects_timed_dur" Height="20" Width="60" Grid.Row="1" Grid.Column="2"
-                                         HorizontalAlignment="Left" VerticalAlignment="Center"
-                                         MaxLength="6" PreviewTextInput="OnlyNumbersPreviewTextInput"
-                                         CommandManager.PreviewExecuted="NoCopyPastePreviewExecuted" ContextMenu="{x:Null}"
-                                         Keyboard.PreviewKeyDown="NoSpacePreviewKeyDown" />
-                        <Label Content="How long should short timed meta effects last (in seconds)?" Grid.Row="2" Grid.Column="0"
-                                       HorizontalAlignment="Right" VerticalAlignment="Center" />
-                        <TextBox x:Name="meta_effects_short_timed_dur" Height="20" Width="60" Grid.Row="2" Grid.Column="2"
-                                         HorizontalAlignment="Left" VerticalAlignment="Center"
-                                         MaxLength="6" PreviewTextInput="OnlyNumbersPreviewTextInput"
-                                         CommandManager.PreviewExecuted="NoCopyPastePreviewExecuted" ContextMenu="{x:Null}"
-                                         Keyboard.PreviewKeyDown="NoSpacePreviewKeyDown" />
-                    </Grid>
+                        <TextBlock Grid.Row="0"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   TextAlignment="Center">
+                                Meta effects modify various aspects of mod itself on a regular basis to add more variety
+                                <LineBreak/>They are not a part of the normal effects pool; instead, they are automatically dispatched by the mod on a fixed interval (configurable below).
+                        </TextBlock>
 
-                    <Grid Grid.Column="1">
-                        <TreeView x:Name="meta_effects_tree_view" BorderBrush="White" Background="{x:Null}">
-                            <TreeView.ItemContainerStyle>
-                                <Style TargetType="{x:Type TreeViewItem}">
-                                    <Setter Property="IsExpanded" Value="True"/>
-                                </Style>
-                            </TreeView.ItemContainerStyle>
-                            <TreeView.Resources>
-                                <HierarchicalDataTemplate DataType="{x:Type local:TreeMenuItem}" ItemsSource="{Binding Children}">
-                                    <StackPanel Orientation="Horizontal" Height="20">
-                                        <CheckBox Focusable="False" IsChecked="{Binding IsChecked}" VerticalAlignment="Center" />
-                                        <TextBlock Text="{Binding Text}" Margin="5,0" VerticalAlignment="Center" />
-                                        <Button Content="..." Visibility="{Binding IsConfigVisible}" IsEnabled="{Binding IsConfigEnabled}" Width="18" Height="18" Margin="8,0" VerticalAlignment="Center" Click="effect_user_config_Click" />
-                                    </StackPanel>
-                                </HierarchicalDataTemplate>
-                            </TreeView.Resources>
-                        </TreeView>
+                        <Grid Grid.Row="1" Margin="12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid Grid.Column="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="40" />
+                                    <RowDefinition Height="40" />
+                                    <RowDefinition Height="40" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Text="How often should a new meta start (in seconds)?" Grid.Row="0" Grid.Column="0"
+                                           HorizontalAlignment="Right" VerticalAlignment="Center" />
+                                <TextBox x:Name="meta_effects_spawn_dur" Height="20" Width="60" Grid.Row="0" Grid.Column="2"
+                                         HorizontalAlignment="Left" VerticalAlignment="Center"
+                                         MaxLength="6" PreviewTextInput="OnlyNumbersPreviewTextInput"
+                                         CommandManager.PreviewExecuted="NoCopyPastePreviewExecuted" ContextMenu="{x:Null}"
+                                         Keyboard.PreviewKeyDown="NoSpacePreviewKeyDown" />
+                                <TextBlock Text="How long should meta effects last (in seconds)?" Grid.Row="1" Grid.Column="0"
+                                           HorizontalAlignment="Right" VerticalAlignment="Center" />
+                                <TextBox x:Name="meta_effects_timed_dur" Height="20" Width="60" Grid.Row="1" Grid.Column="2"
+                                         HorizontalAlignment="Left" VerticalAlignment="Center"
+                                         MaxLength="6" PreviewTextInput="OnlyNumbersPreviewTextInput"
+                                         CommandManager.PreviewExecuted="NoCopyPastePreviewExecuted" ContextMenu="{x:Null}"
+                                         Keyboard.PreviewKeyDown="NoSpacePreviewKeyDown" />
+                                <TextBlock Text="How long should short timed meta effects last (in seconds)?" Grid.Row="2" Grid.Column="0"
+                                           HorizontalAlignment="Right" VerticalAlignment="Center" />
+                                <TextBox x:Name="meta_effects_short_timed_dur" Height="20" Width="60" Grid.Row="2" Grid.Column="2"
+                                         HorizontalAlignment="Left" VerticalAlignment="Center"
+                                         MaxLength="6" PreviewTextInput="OnlyNumbersPreviewTextInput"
+                                         CommandManager.PreviewExecuted="NoCopyPastePreviewExecuted" ContextMenu="{x:Null}"
+                                         Keyboard.PreviewKeyDown="NoSpacePreviewKeyDown" />
+                            </Grid>
+
+                            <Grid Grid.Column="1">
+                                <TreeView x:Name="meta_effects_tree_view" BorderBrush="White" Background="{x:Null}">
+                                    <TreeView.ItemContainerStyle>
+                                        <Style TargetType="{x:Type TreeViewItem}">
+                                            <Setter Property="IsExpanded" Value="True"/>
+                                        </Style>
+                                    </TreeView.ItemContainerStyle>
+                                    <TreeView.Resources>
+                                        <HierarchicalDataTemplate DataType="{x:Type local:TreeMenuItem}" ItemsSource="{Binding Children}">
+                                            <StackPanel Orientation="Horizontal" Height="20">
+                                                <CheckBox Focusable="False" IsChecked="{Binding IsChecked}" VerticalAlignment="Center" />
+                                                <TextBlock Text="{Binding Text}" Margin="5,0" VerticalAlignment="Center" />
+                                                <Button Content="..." Visibility="{Binding IsConfigVisible}" IsEnabled="{Binding IsConfigEnabled}" Width="18" Height="18" Margin="8,0" VerticalAlignment="Center" Click="effect_user_config_Click" />
+                                            </StackPanel>
+                                        </HierarchicalDataTemplate>
+                                    </TreeView.Resources>
+                                </TreeView>
+                            </Grid>
+                        </Grid>
                     </Grid>
-                </Grid>
+                </ScrollViewer>
             </Grid>
 
             <Grid Visibility="{Binding IsSelected, ElementName=nav_misc_selection, Converter={StaticResource boolToVisibility}}">
                 <ScrollViewer Padding="18" SizeChanged="RowListingUpdate">
                     <ScrollViewer.Resources>
-                        <Style TargetType="ui:NumberBox">
-                            <Setter Property="Margin" Value="8"/>
-                            <Setter Property="Maximum" Value="999999"/>
-                            <Setter Property="Width" Value="120"/>
-                        </Style>
-                        <Style TargetType="Label" BasedOn="{StaticResource DefaultLabelStyle}">
-                            <Setter Property="VerticalAlignment" Value="Center"/>
-                        </Style>
                         <Style TargetType="CheckBox" BasedOn="{StaticResource DefaultCheckBoxStyle}">
-                            <Setter Property="Margin" Value="0,8"/>
+                            <Setter Property="Margin" Value="0,4"/>
                         </Style>
                     </ScrollViewer.Resources>
                     <Grid>
@@ -211,8 +249,8 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
-                            <Label Content="How often should a new effect start (in seconds)?" VerticalAlignment="Center"
-                                   Grid.Column="0"/>
+                            <TextBlock Text="How often should a new effect start (in seconds)?" VerticalAlignment="Center"
+                                       Grid.Column="0"/>
                             <ui:NumberBox x:Name="misc_user_effects_spawn_dur" Value="{Binding NewEffectSpawnTime, Mode=TwoWay}"
                                           Grid.Column="1" Maximum="999999" Width="120"/>
                         </Grid>
@@ -224,7 +262,7 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
-                            <Label Content="How long should timed effects last (in seconds)?" Grid.Column="0"/>
+                            <TextBlock Text="How long should timed effects last (in seconds)?" Grid.Column="0"/>
                             <ui:NumberBox x:Name="misc_user_effects_timed_dur" Value="{Binding EffectTimedDur, Mode=TwoWay}" Grid.Column="1"/>
                         </Grid>
 
@@ -234,7 +272,7 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
-                            <Label Content="How long should short timed effects last (in seconds)?" Grid.Column="0"/>
+                            <TextBlock Text="How long should short timed effects last (in seconds)?" Grid.Column="0"/>
                             <ui:NumberBox x:Name="misc_user_effects_timed_short_dur" Value="{Binding EffectTimedShortDur, Mode=TwoWay}" Grid.Column="1"/>
                         </Grid>
 
@@ -244,7 +282,7 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
-                            <Label Content="Random Seed (Leave empty for random seed every time)" Grid.Column="0"/>
+                            <TextBlock Text="Random Seed (Leave empty for random seed every time)" Grid.Column="0"/>
                             <ui:NumberBox x:Name="misc_user_effects_random_seed" Text="{Binding Seed, Mode=TwoWay}" Grid.Column="1"/>
                         </Grid>
 
@@ -254,38 +292,44 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
-                            <Label Content="Max amount of simultaneously running effects" Grid.Column="0"/>
+                            <TextBlock Text="Max amount of simultaneously running effects" Grid.Column="0"/>
                             <ui:NumberBox x:Name="misc_user_effects_max_running_effects" Value="{Binding MaxParallelRunningEffects, Mode=TwoWay}"
                                           Maximum="99" Grid.Column="1"/>
                         </Grid>
-                        
 
-                        <StackPanel Orientation="Vertical"
-                                    Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='5,r,9'}"
-                                    Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='5,c,9'}">
-                            <Label Content="Timer Bar Color"/>
-                            <xctk:ColorPicker Name="misc_user_effects_timer_color"
-                                              Width="60" Height="25" HorizontalAlignment="Left"
-                                              SelectedColor="{Binding EffectTimerColor, Mode=TwoWay}" ShowStandardColors="False" UsingAlphaChannel="False" />
-                        </StackPanel>
 
-                        <StackPanel Orientation="Vertical"
-                                      Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='6,r,9'}"
-                                      Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='6,c,9'}">
-                            <Label Content="Effect Text Color"/>
-                            <xctk:ColorPicker x:Name="misc_user_effects_text_color"
-                                              Width="60" Height="25" HorizontalAlignment="Left"
-                                              SelectedColor="{Binding EffectTextColor, Mode=TwoWay}" ShowStandardColors="False" UsingAlphaChannel="False"/>
-                        </StackPanel>
+                        <Grid Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='5,r,9'}"
+                              Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='5,c,9'}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Timer Bar Color" Grid.Column="0"/>
+                            <xctk:ColorPicker Name="misc_user_effects_timer_color" Grid.Column="1"
+                                              SelectedColor="{Binding EffectTimerColor, Mode=TwoWay}"/>
+                        </Grid>
 
-                        <StackPanel Orientation="Vertical"
-                                    Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='7,r,9'}"
-                                    Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='7,c,9'}">
-                            <Label Content="Effect Timer Bar Color"/>
-                            <xctk:ColorPicker x:Name="misc_user_effects_effect_timer_color"
-                                              Width="60" Height="25" HorizontalAlignment="Left"
-                                              SelectedColor="{Binding EffectTimedTimerColor, Mode=TwoWay}" ShowStandardColors="False" UsingAlphaChannel="False" />
-                        </StackPanel>
+                        <Grid Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='6,r,9'}"
+                              Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='6,c,9'}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Effect Text Color" Grid.Column="0"/>
+                            <xctk:ColorPicker x:Name="misc_user_effects_text_color" Grid.Column="1"
+                                              SelectedColor="{Binding EffectTextColor, Mode=TwoWay}"/>
+                        </Grid>
+
+                        <Grid Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='7,r,9'}"
+                              Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='7,c,9'}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Effect Timer Bar Color" Grid.Column="0"/>
+                            <xctk:ColorPicker x:Name="misc_user_effects_effect_timer_color" Grid.Column="1"
+                                              SelectedColor="{Binding EffectTimedTimerColor, Mode=TwoWay}"/>
+                        </Grid>
 
                         <CheckBox Content="Disable mod on startup by default"
                                   VerticalContentAlignment="Center"
@@ -370,23 +414,6 @@
                         </Grid>
 
                         <Grid Grid.Row="1">
-                            <Grid.Resources>
-                                <Style TargetType="TextBox" BasedOn="{StaticResource DefaultTextBoxStyle}">
-                                    <Setter Property="Margin" Value="12,4"/>
-                                </Style>
-                                <Style TargetType="PasswordBox" BasedOn="{StaticResource DefaultPasswordBoxStyle}">
-                                    <Setter Property="Margin" Value="12,4"/>
-                                </Style>
-                                <Style TargetType="CheckBox" BasedOn="{StaticResource DefaultCheckBoxStyle}">
-                                    <Setter Property="Margin" Value="12,4"/>
-                                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                                    <Setter Property="VerticalAlignment" Value="Center"/>
-                                    <Setter Property="VerticalContentAlignment" Value="Center"/>
-                                </Style>
-                                <Style TargetType="ComboBox" BasedOn="{StaticResource DefaultComboBoxStyle}">
-                                    <Setter Property="Margin" Value="12,4"/>
-                                </Style>
-                            </Grid.Resources>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="{Binding SecondColumnSize}" />
@@ -482,7 +509,7 @@
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
-                            <Label Content="---------- Proportional Voting Mode ----------"
+                            <TextBlock Text="---------- Proportional Voting Mode ----------"
                                    HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,12,0,0"
                                    Grid.ColumnSpan="2" 
                                    Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='0,r,2'}"
@@ -510,19 +537,8 @@
 
             <Grid Visibility="{Binding IsSelected, ElementName=nav_more_selection, Converter={StaticResource boolToVisibility}}">
                 <Grid.Resources>
-                    <Style TargetType="Rectangle" x:Key="decoratedBackground">
-                        <Setter Property="Fill" Value="{DynamicResource CommandBarBackground}"/>
-                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                        <Setter Property="Margin" Value="4"/>
-                        <Setter Property="Height" Value="64"/>
-                    </Style>
-                    <Style TargetType="Label" BasedOn="{StaticResource DefaultLabelStyle}">
+                    <Style TargetType="TextBlock" x:Key="creditTextBlock">
                         <Setter Property="Margin" Value="18"/>
-                        <Setter Property="VerticalAlignment" Value="Center"/>
-                    </Style>
-                    <Style TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
-                        <Setter Property="Margin" Value="18"/>
-                        <Setter Property="HorizontalAlignment" Value="Right"/>
                         <Setter Property="VerticalAlignment" Value="Center"/>
                     </Style>
                 </Grid.Resources>
@@ -533,22 +549,22 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Rectangle Style="{StaticResource decoratedBackground}"/>
-                <Label Content="Visit the mod page for more information"/>
+                <TextBlock Text="Visit the mod page for more information" Style="{StaticResource creditTextBlock}"/>
                 <Button Content="GTA5-Mods" Click="contribute_modpage_click" />
                 
                 <Rectangle Style="{StaticResource decoratedBackground}" Grid.Row="1"/>
-                <Label Content="Enjoying the mod? Buy me a coffee! :)" Grid.Row="1"
-                       Margin="18" VerticalAlignment="Center" />
+                <TextBlock Text="Enjoying the mod? Buy me a coffee! :)" Grid.Row="1"
+                       Margin="18" VerticalAlignment="Center" Style="{StaticResource creditTextBlock}"/>
                 <Button Content="PayPal" Grid.Row="1" Margin="18"
                         HorizontalAlignment="Right" VerticalAlignment="Center"
                         Click="contribute_donate_click" />
 
                 <Rectangle Style="{StaticResource decoratedBackground}" Grid.Row="2"/>
-                <Label Content="Want to contribute to the mod? It's open source!" Grid.Row="2"/>
+                <TextBlock Text="Want to contribute to the mod? It's open source!" Grid.Row="2" Style="{StaticResource creditTextBlock}"/>
                 <Button Content="GitHub" Grid.Row="2" Click="contribute_github_click" />
 
                 <Rectangle Style="{StaticResource decoratedBackground}" Grid.Row="3"/>
-                <Label Content="Join our Discord for announcements, support and more!" Grid.Row="3"/>
+                <TextBlock Text="Join our Discord for announcements, support and more!" Grid.Row="3" Style="{StaticResource creditTextBlock}"/>
                 <Button Content="Discord" Grid.Row="3" Click="contribute_discord_click"/>
             </Grid>
         </Grid>
