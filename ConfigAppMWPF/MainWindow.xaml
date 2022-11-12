@@ -146,7 +146,7 @@
                         <TreeView x:Name="meta_effects_tree_view" BorderBrush="White" Background="{x:Null}">
                             <TreeView.ItemContainerStyle>
                                 <Style TargetType="{x:Type TreeViewItem}">
-                                    <Setter Property="IsExpanded" Value="True" />
+                                    <Setter Property="IsExpanded" Value="True"/>
                                 </Style>
                             </TreeView.ItemContainerStyle>
                             <TreeView.Resources>
@@ -167,7 +167,15 @@
                 <ScrollViewer Padding="18" SizeChanged="RowListingUpdate">
                     <ScrollViewer.Resources>
                         <Style TargetType="ui:NumberBox">
-                            <Setter Property="Margin" Value="0,0,24,0"/>
+                            <Setter Property="Margin" Value="8"/>
+                            <Setter Property="Maximum" Value="999999"/>
+                            <Setter Property="Width" Value="120"/>
+                        </Style>
+                        <Style TargetType="Label" BasedOn="{StaticResource DefaultLabelStyle}">
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+                        <Style TargetType="CheckBox" BasedOn="{StaticResource DefaultCheckBoxStyle}">
+                            <Setter Property="Margin" Value="0,8"/>
                         </Style>
                     </ScrollViewer.Resources>
                     <Grid>
@@ -196,30 +204,61 @@
                             <RowDefinition Height="auto" />
                         </Grid.RowDefinitions>
 
-                        <ui:NumberBox ui:ControlHelper.Header="How often should a new effect start (in seconds)?"
-                                      x:Name="misc_user_effects_spawn_dur" Value="{Binding NewEffectSpawnTime, Mode=TwoWay}"
-                                      Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='0,r,9'}"
-                                      Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='0,c,9'}"/>
+                        <Grid Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='0,r,9'}"
+                              Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='0,c,9'}"
+                              HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Content="How often should a new effect start (in seconds)?" VerticalAlignment="Center"
+                                   Grid.Column="0"/>
+                            <ui:NumberBox x:Name="misc_user_effects_spawn_dur" Value="{Binding NewEffectSpawnTime, Mode=TwoWay}"
+                                          Grid.Column="1" Maximum="999999" Width="120"/>
+                        </Grid>
 
-                        <ui:NumberBox ui:ControlHelper.Header="How long should timed effects last (in seconds)?"
-                                      x:Name="misc_user_effects_timed_dur" Value="{Binding EffectTimedDur, Mode=TwoWay}"
-                                      Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='1,r,9'}"
-                                      Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='1,c,9'}"/>
+                        <Grid Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='1,r,9'}" 
+                              Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='1,c,9'}"
+                              HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Content="How long should timed effects last (in seconds)?" Grid.Column="0"/>
+                            <ui:NumberBox x:Name="misc_user_effects_timed_dur" Value="{Binding EffectTimedDur, Mode=TwoWay}" Grid.Column="1"/>
+                        </Grid>
 
-                        <ui:NumberBox ui:ControlHelper.Header="How long should short timed effects last (in seconds)?"
-                                      x:Name="misc_user_effects_timed_short_dur" Value="{Binding EffectTimedShortDur, Mode=TwoWay}"
-                                      Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='2,r,9'}"
-                                      Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='2,c,9'}"/>
+                        <Grid Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='2,r,9'}"
+                              Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='2,c,9'}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Content="How long should short timed effects last (in seconds)?" Grid.Column="0"/>
+                            <ui:NumberBox x:Name="misc_user_effects_timed_short_dur" Value="{Binding EffectTimedShortDur, Mode=TwoWay}" Grid.Column="1"/>
+                        </Grid>
 
-                        <ui:NumberBox ui:ControlHelper.Header="Random Seed (Leave empty for random seed every time)"
-                                      x:Name="misc_user_effects_random_seed" Text="{Binding Seed, Mode=TwoWay}"
-                                      Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='3,r,9'}"
-                                      Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='3,c,9'}"/>
+                        <Grid Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='3,r,9'}" 
+                              Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='3,c,9'}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Content="Random Seed (Leave empty for random seed every time)" Grid.Column="0"/>
+                            <ui:NumberBox x:Name="misc_user_effects_random_seed" Text="{Binding Seed, Mode=TwoWay}" Grid.Column="1"/>
+                        </Grid>
 
-                        <ui:NumberBox x:Name="misc_user_effects_max_running_effects" Value="{Binding MaxParallelRunningEffects, Mode=TwoWay}"
-                                      Maximum="99" ui:ControlHelper.Header="Max amount of simultaneously running effects"
-                                      Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='4,r,9'}"
-                                      Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='4,c,9'}"/>
+                        <Grid Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='4,r,9'}"
+                              Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='4,c,9'}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Content="Max amount of simultaneously running effects" Grid.Column="0"/>
+                            <ui:NumberBox x:Name="misc_user_effects_max_running_effects" Value="{Binding MaxParallelRunningEffects, Mode=TwoWay}"
+                                          Maximum="99" Grid.Column="1"/>
+                        </Grid>
+                        
 
                         <StackPanel Orientation="Vertical"
                                     Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='5,r,9'}"
