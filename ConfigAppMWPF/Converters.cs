@@ -28,18 +28,18 @@ namespace ConfigApp
 
     public class RowSplitConverter : IValueConverter
     {
-        private const int MaxRow = 9;
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is bool showTwoRow && parameter is string p)
             {
                 /* False > One row
                  * True > Two row
-                 * Parameter expected > [item index],[r/c (Row/Column)]
+                 * Parameter expected > [item index],[r/c (Row/Column)],[maxRow]
                  * */
                 var parameters = p.Split(',');
                 int index = int.Parse(parameters[0]);
                 bool isRow = parameters[1] == "r";
+                int maxRow = int.Parse(parameters[2]);
                 if (!showTwoRow && isRow) //Return index for 1 row display
                 {
                     return index;
@@ -50,11 +50,11 @@ namespace ConfigApp
                 }
                 else if (showTwoRow && isRow) //Return index for 2 row display, after item 9th start from 0
                 {
-                    return index % MaxRow;
+                    return index % maxRow;
                 }
                 else if (showTwoRow && !isRow) //Return column 0 for 0-9th item | return 1 for 10th+ item
                 {
-                    return index < MaxRow ? 0 : 1;
+                    return index < maxRow ? 0 : 1;
                 }
             }
             return -1;
