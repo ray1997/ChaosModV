@@ -5,6 +5,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:ConfigApp"
         xmlns:ui="http://schemas.modernwpf.com/2019"
+        xmlns:sys="clr-namespace:System;assembly=System.Runtime"
         ui:WindowHelper.UseModernWindowStyle="True"
         x:Class="ConfigApp.MainWindow"
         mc:Ignorable="d"
@@ -321,117 +322,156 @@
             </Grid>
 
             <Grid Visibility="{Binding IsSelected, ElementName=nav_twitch_selection, Converter={StaticResource boolToVisibility}}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="120" />
-                    <RowDefinition Height="180" />
-                    <RowDefinition Height="30" />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
+                <ScrollViewer>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
 
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="80" />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
 
-                    <Label Content="This feature allows Twitch chat to vote for an effect from a collection of random ones each time the timer runs out by making use of Twitch's chat feature.&#xA;There are specific options you can / must configure below.&#xA;Consult the twitch__readme.txt file included with the mod (inside the README folder) for more information."
-                                   Grid.Row="0"
-                                   HorizontalAlignment="Center" VerticalAlignment="Center" />
-                    <CheckBox x:Name="twitch_user_agreed" Content="Enable Twitch Voting" Grid.Row="1"
+                            <TextBlock Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                               TextAlignment="Center" TextWrapping="Wrap">
+                                This feature allows Twitch chat to vote for an effect from a collection of random ones each time the timer runs out by making use of Twitch's chat feature.
+                                <LineBreak/>There are specific options you can / must configure below.
+                                <LineBreak/>Consult the twitch__readme.txt file included with the mod (inside the README folder) for more information.
+                            </TextBlock>
+                            <CheckBox x:Name="twitch_user_agreed" Grid.Row="1"
                                       HorizontalAlignment="Center" VerticalAlignment="Center"
-                                      Click="twitch_user_agreed_Clicked" />
-                </Grid>
+                                      IsChecked="{Binding EnableTwitchVoting, Mode=TwoWay}"
+                                      Content="Enable Twitch Voting"/>
+                        </Grid>
 
-                <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="340" />
-                        <ColumnDefinition Width="10" />
-                        <ColumnDefinition Width="400" />
-                        <ColumnDefinition Width="10" />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="40" />
-                        <RowDefinition Height="40" />
-                        <RowDefinition Height="40" />
-                        <RowDefinition Height="45" />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
+                        <Grid Grid.Row="1">
+                            <Grid.Resources>
+                                <Style TargetType="TextBox" BasedOn="{StaticResource DefaultTextBoxStyle}">
+                                    <Setter Property="Margin" Value="12,4"/>
+                                </Style>
+                                <Style TargetType="PasswordBox" BasedOn="{StaticResource DefaultPasswordBoxStyle}">
+                                    <Setter Property="Margin" Value="12,4"/>
+                                </Style>
+                                <Style TargetType="ui:ToggleSwitch">
+                                    <Setter Property="Margin" Value="12,4"/>
+                                </Style>
+                                <Style TargetType="ComboBox" BasedOn="{StaticResource DefaultComboBoxStyle}">
+                                    <Setter Property="Margin" Value="12,4"/>
+                                </Style>
+                            </Grid.Resources>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
 
-                    <Label x:Name="twitch_user_channel_name_label" Content="Channel Name" Grid.Row="0" Grid.Column="0"
-                                   HorizontalAlignment="Right" VerticalAlignment="Center" />
-                    <TextBox x:Name="twitch_user_channel_name" Width="120" Height="20" Grid.Row="0" Grid.Column="2"
-                                     HorizontalAlignment="Left" VerticalAlignment="Center" />
-                    <Label x:Name="twitch_user_user_name_label" Content="Username" Grid.Row="1" Grid.Column="0"
-                                   HorizontalAlignment="Right" VerticalAlignment="Center" />
-                    <TextBox x:Name="twitch_user_user_name" Width="120" Height="20" Grid.Row="1" Grid.Column="2"
-                                     HorizontalAlignment="Left" VerticalAlignment="Center" />
-                    <Label x:Name="twitch_user_channel_oauth_label" Content="OAuth Token" Grid.Row="2" Grid.Column="0"
-                                   HorizontalAlignment="Right" VerticalAlignment="Center" />
-                    <PasswordBox x:Name="twitch_user_channel_oauth" Width="120" Height="20" Grid.Row="2" Grid.Column="2"
-                                         HorizontalAlignment="Left" VerticalAlignment="Center" />
-                    <Label x:Name="twitch_user_effects_secs_before_chat_voting_label" Content="Only enable chat voting X seconds before new effect triggers&#xA;(Keep at 0 to allow chat to immediately vote, value can't be 1)"
-                                   Grid.Row="3" Grid.Column="0"
-                                   HorizontalAlignment="Right" VerticalAlignment="Center" />
-                    <TextBox x:Name="twitch_user_effects_secs_before_chat_voting" Width="60" Height="20" Grid.Row="3" Grid.Column="2"
-                                     HorizontalAlignment="Left" VerticalAlignment="Center"
-                                     MaxLength="6" PreviewTextInput="OnlyNumbersPreviewTextInput"
-                                     CommandManager.PreviewExecuted="NoCopyPastePreviewExecuted" ContextMenu="{x:Null}"
-                                     Keyboard.PreviewKeyDown="NoSpacePreviewKeyDown" />
-                    <Label x:Name="twitch_user_overlay_mode_label" Content="Voting Overlay Mode" Grid.Row="0" Grid.Column="2"
-                                   HorizontalAlignment="Right" VerticalAlignment="Center" />
-                    <ComboBox x:Name="twitch_user_overlay_mode" Width="120" Height="25" Grid.Row="0" Grid.Column="4"
-                                      HorizontalAlignment="Left" VerticalAlignment="Center" />
-                    <Label x:Name="twitch_user_random_voteable_enable_label" Content="Enable &quot;Random Effect&quot; voteable option" Grid.Row="1" Grid.Column="2"
-                                   HorizontalAlignment="Right" VerticalAlignment="Center" />
-                    <CheckBox x:Name="twitch_user_random_voteable_enable" Width="60" Height="20" Grid.Row="1" Grid.Column="4"
-                                      HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" />
-                    <Label x:Name="twitch_permitted_usernames_label" Content="Permitted Twitch usernames (separated by , )"
-                                Grid.Row="3" Grid.Column="2"
-                                HorizontalAlignment="Right" VerticalAlignment="Center" />
-                    <TextBox x:Name="twitch_permitted_usernames" Width="200" Height="20" Grid.Row="3" Grid.Column="4"
-                                HorizontalAlignment="Left" VerticalAlignment="Center"
-                                CommandManager.PreviewExecuted="NoCopyPastePreviewExecuted" ContextMenu="{x:Null}"
-                                Keyboard.PreviewKeyDown="NoSpacePreviewKeyDown" />
-                </Grid>
+                            <TextBox x:Name="twitch_user_channel_name" 
+                                     IsEnabled="{Binding EnableTwitchVoting}"
+                                     Text="{Binding TwitchChannelName, Mode=TwoWay}"
+                                     ui:ControlHelper.Header="Channel name" Grid.Row="0" Grid.Column="0"
+                                     HorizontalAlignment="Stretch" VerticalAlignment="Center" />
 
-                <Grid Grid.Row="2">
-                    <Label Content="---------- Proportional Voting Mode ----------"
-                                   HorizontalAlignment="Center" VerticalAlignment="Center" />
-                </Grid>
+                            <TextBox x:Name="twitch_user_user_name" 
+                                     ui:ControlHelper.Header="Username"
+                                     IsEnabled="{Binding EnableTwitchVoting}"
+                                     Text="{Binding TwitchUserName, Mode=TwoWay}"
+                                     Grid.Row="1" Grid.Column="0"
+                                     HorizontalAlignment="Stretch" VerticalAlignment="Center" />
 
-                <Grid Grid.Row="3">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
+                            <PasswordBox x:Name="twitch_user_channel_oauth"
+                                         ui:ControlHelper.Header="OAuth Token"
+                                         PasswordChanged="twitch_user_channel_oauth_PasswordChanged"
+                                         IsEnabled="{Binding EnableTwitchVoting}"
+                                         Grid.Row="2" Grid.Column="0"
+                                         HorizontalAlignment="Stretch" VerticalAlignment="Center" />
 
-                    <Grid Grid.Column="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*" />
-                            <ColumnDefinition Width="10" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
+                            <TextBox x:Name="twitch_user_effects_secs_before_chat_voting" 
+                                     Grid.Row="3" Grid.Column="0"
+                                     IsEnabled="{Binding EnableTwitchVoting}"
+                                     Text="{Binding TwitchVotingSecsBeforeVoting, Mode=TwoWay}"
+                                     HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                <ui:ControlHelper.Header>
+                                    <TextBlock TextWrapping="Wrap">
+                                            Only enable chat voting X seconds before new effect triggers
+                                            <LineBreak/>(Keep at 0 to allow chat to immediately vote, value can't be 1)
+                                    </TextBlock>
+                                </ui:ControlHelper.Header>
+                            </TextBox>
 
-                        <Label x:Name="twitch_user_chance_system_enable_label" Content="Enable proportional voting mode" Grid.Column="0"
-                                   HorizontalAlignment="Right" VerticalAlignment="Center" />
-                        <CheckBox x:Name="twitch_user_chance_system_enable" Width="60" Height="20" Grid.Column="2"
-                                      HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" />
+                            <ComboBox x:Name="twitch_user_overlay_mode" 
+                                      IsEnabled="{Binding EnableTwitchVoting}"
+                                      SelectedIndex="{Binding TwitchVotingOverlayMode, Mode=TwoWay}"
+                                      ui:ControlHelper.Header="Voting Overlay Mode"
+                                      Grid.Row="0" Grid.Column="1"
+                                      HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                <sys:String>Chat Messages</sys:String>
+                                <sys:String>In-Game Overlay</sys:String>
+                                <sys:String>OBS Overlay</sys:String>
+                            </ComboBox>
+
+                            <ui:ToggleSwitch x:Name="twitch_user_random_voteable_enable"
+                                             IsEnabled="{Binding EnableTwitchVoting}"
+                                             ui:ControlHelper.Header="Enable &quot;Random Effect&quot; voteable option"
+                                             Grid.Row="1" Grid.Column="1"
+                                             IsOn="{Binding TwitchRandomEffectVoteableEnable, Mode=TwoWay}"
+                                             HorizontalAlignment="Stretch" VerticalAlignment="Center" VerticalContentAlignment="Center" 
+                                             OnContent="Random effect is on the list!"
+                                             OffContent="Random effect will not be on the list"/>
+
+                            <TextBox x:Name="twitch_permitted_usernames" 
+                                     ui:ControlHelper.Header="Permitted Twitch usernames (separated by , )"
+                                     Grid.Row="2" Grid.Column="4"
+                                     IsEnabled="{Binding EnableTwitchVoting}"
+                                     Text="{Binding TwitchPermittedUsernames, Mode=TwoWay}"
+                                     Grid.RowSpan="2"
+                                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                        </Grid>
+
+                        <Grid Grid.Row="2" Margin="0,10,0,0">
+                        </Grid>
+
+                        <Grid Grid.Row="3">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Label Content="---------- Proportional Voting Mode ----------"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,12,0,0"
+                                   Grid.ColumnSpan="2" 
+                                   Grid.Column="0" Grid.Row="0"/>
+
+                            <ui:ToggleSwitch x:Name="twitch_user_chance_system_enable"
+                                             ui:ControlHelper.Header="Enable proportional voting mode" 
+                                             Grid.Column="0" Grid.Row="1" IsEnabled="{Binding EnableTwitchVoting}"
+                                             IsOn="{Binding TwitchVotingChanceSystem, Mode=TwoWay}"
+                                             HorizontalAlignment="Stretch" VerticalAlignment="Center" VerticalContentAlignment="Center" 
+                                             OnContent="Proportional voting enabled"
+                                             OffContent="Proportional voting disabled"/>
+
+                            <ui:ToggleSwitch x:Name="twitch_user_chance_system_retain_chance_enable" 
+                                             IsOn="{Binding TwitchVotingChanceSystemRetainChance, Mode=TwoWay}"
+                                             ui:ControlHelper.Header="Effects without votes should never lose their initial chance"
+                                             Grid.Column="1" Grid.Row="1" IsEnabled="{Binding EnableTwitchVoting}"
+                                             HorizontalAlignment="Stretch" VerticalAlignment="Center" VerticalContentAlignment="Center" />
+                        </Grid>
                     </Grid>
-
-                    <Grid Grid.Column="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*" />
-                            <ColumnDefinition Width="10" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-
-                        <Label x:Name="twitch_user_chance_system_retain_chance_enable_label" Content="Effects without votes should never lose their initial chance" Grid.Column="0"
-                                       HorizontalAlignment="Right" VerticalAlignment="Center" />
-                        <CheckBox x:Name="twitch_user_chance_system_retain_chance_enable" Width="60" Height="20" Grid.Column="2"
-                                          HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" />
-                    </Grid>
-                </Grid>
+                </ScrollViewer>
             </Grid>
 
             <Grid Visibility="{Binding IsSelected, ElementName=nav_more_selection, Converter={StaticResource boolToVisibility}}">

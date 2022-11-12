@@ -20,7 +20,6 @@ namespace ConfigApp
         private bool m_initializedTitle = false;
         
         private OptionsFile m_configFile = new OptionsFile("config.ini");
-        private OptionsFile m_twitchFile = new OptionsFile("twitch.ini");
         private OptionsFile m_effectsFile = new OptionsFile("effects.ini");
 
         private Dictionary<string, TreeMenuItem> m_treeMenuItemsMap;
@@ -35,13 +34,6 @@ namespace ConfigApp
         {
             InitializeComponent();
 
-            twitch_user_overlay_mode.ItemsSource = new string[]
-            {
-                "Chat Messages",
-                "In-Game Overlay",
-                "OBS Overlay"
-            };
-
             if (!m_initializedTitle)
             {
                 m_initializedTitle = true;
@@ -50,13 +42,13 @@ namespace ConfigApp
             }
 
             ParseConfigFile();
-            ParseTwitchFile();
+            //ParseTwitchFile();
 
             InitEffectsTreeView();
 
             ParseEffectsFile();
 
-            InitTwitchTab();
+            //InitTwitchTab();
 
             // Check write permissions
             try
@@ -77,6 +69,33 @@ namespace ConfigApp
                     "No Write Access", MessageBoxButton.OK, MessageBoxImage.Error);
 
                 Application.Current.Shutdown();
+            }
+
+            Closing += UnsavedChangesWarning;
+            twitch_user_channel_oauth.Password = ViewModel.TwitchChannelOAuth;
+        }
+
+        private void UnsavedChangesWarning(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (!ViewModel.UnsavedChanges)
+            {
+                e.Cancel = false;
+                return;
+            }
+
+            if (ViewModel.UnsavedChanges)
+            {
+                var result = MessageBox.Show("Do you want to save changes that have been made before exit?",
+                    "There is unsaved changes!", MessageBoxButton.YesNoCancel);
+                if (result == MessageBoxResult.Cancel)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+                else if (result == MessageBoxResult.Yes)
+                {
+                    //TODO:Save changes
+                }
             }
         }
 
@@ -164,37 +183,37 @@ namespace ConfigApp
             m_configFile.WriteFile();
         }
 
-        private void ParseTwitchFile()
-        {
-            m_twitchFile.ReadFile();
+        //private void ParseTwitchFile()
+        //{
+        //    m_twitchFile.ReadFile();
 
-            twitch_user_agreed.IsChecked = m_twitchFile.ReadValueBool("EnableTwitchVoting", false);
-            twitch_user_channel_name.Text = m_twitchFile.ReadValue("TwitchChannelName");
-            twitch_user_user_name.Text = m_twitchFile.ReadValue("TwitchUserName");
-            twitch_user_channel_oauth.Password = m_twitchFile.ReadValue("TwitchChannelOAuth");
-            twitch_user_effects_secs_before_chat_voting.Text = m_twitchFile.ReadValue("TwitchVotingSecsBeforeVoting", "0");
-            twitch_user_overlay_mode.SelectedIndex = m_twitchFile.ReadValueInt("TwitchVotingOverlayMode", 0);
-            twitch_user_chance_system_enable.IsChecked = m_twitchFile.ReadValueBool("TwitchVotingChanceSystem", false);
-            twitch_user_chance_system_retain_chance_enable.IsChecked = m_twitchFile.ReadValueBool("TwitchVotingChanceSystemRetainChance", true);
-            twitch_user_random_voteable_enable.IsChecked = m_twitchFile.ReadValueBool("TwitchRandomEffectVoteableEnable", true);
-            twitch_permitted_usernames.Text = m_twitchFile.ReadValue("TwitchPermittedUsernames");
-        }
+        //    twitch_user_agreed.IsChecked = m_twitchFile.ReadValueBool("EnableTwitchVoting", false);
+        //    twitch_user_channel_name.Text = m_twitchFile.ReadValue("TwitchChannelName");
+        //    twitch_user_user_name.Text = m_twitchFile.ReadValue("TwitchUserName");
+        //    twitch_user_channel_oauth.Password = m_twitchFile.ReadValue("TwitchChannelOAuth");
+        //    twitch_user_effects_secs_before_chat_voting.Text = m_twitchFile.ReadValue("TwitchVotingSecsBeforeVoting", "0");
+        //    twitch_user_overlay_mode.SelectedIndex = m_twitchFile.ReadValueInt("TwitchVotingOverlayMode", 0);
+        //    twitch_user_chance_system_enable.IsChecked = m_twitchFile.ReadValueBool("TwitchVotingChanceSystem", false);
+        //    twitch_user_chance_system_retain_chance_enable.IsChecked = m_twitchFile.ReadValueBool("TwitchVotingChanceSystemRetainChance", true);
+        //    twitch_user_random_voteable_enable.IsOn = m_twitchFile.ReadValueBool("TwitchRandomEffectVoteableEnable", true);
+        //    twitch_permitted_usernames.Text = m_twitchFile.ReadValue("TwitchPermittedUsernames");
+        //}
 
-        private void WriteTwitchFile()
-        {
-            m_twitchFile.WriteValue("EnableTwitchVoting", twitch_user_agreed.IsChecked.Value);
-            m_twitchFile.WriteValue("TwitchChannelName", twitch_user_channel_name.Text);
-            m_twitchFile.WriteValue("TwitchUserName", twitch_user_user_name.Text);
-            m_twitchFile.WriteValue("TwitchChannelOAuth", twitch_user_channel_oauth.Password);
-            m_twitchFile.WriteValue("TwitchVotingSecsBeforeVoting", twitch_user_effects_secs_before_chat_voting.Text);
-            m_twitchFile.WriteValue("TwitchVotingOverlayMode", twitch_user_overlay_mode.SelectedIndex);
-            m_twitchFile.WriteValue("TwitchVotingChanceSystem", twitch_user_chance_system_enable.IsChecked.Value);
-            m_twitchFile.WriteValue("TwitchVotingChanceSystemRetainChance", twitch_user_chance_system_retain_chance_enable.IsChecked.Value);
-            m_twitchFile.WriteValue("TwitchRandomEffectVoteableEnable", twitch_user_random_voteable_enable.IsChecked.Value);
-            m_twitchFile.WriteValue("TwitchPermittedUsernames", twitch_permitted_usernames.Text);
+        //private void WriteTwitchFile()
+        //{
+        //    m_twitchFile.WriteValue("EnableTwitchVoting", twitch_user_agreed.IsChecked.Value);
+        //    m_twitchFile.WriteValue("TwitchChannelName", twitch_user_channel_name.Text);
+        //    m_twitchFile.WriteValue("TwitchUserName", twitch_user_user_name.Text);
+        //    m_twitchFile.WriteValue("TwitchChannelOAuth", twitch_user_channel_oauth.Password);
+        //    m_twitchFile.WriteValue("TwitchVotingSecsBeforeVoting", twitch_user_effects_secs_before_chat_voting.Text);
+        //    m_twitchFile.WriteValue("TwitchVotingOverlayMode", twitch_user_overlay_mode.SelectedIndex);
+        //    m_twitchFile.WriteValue("TwitchVotingChanceSystem", twitch_user_chance_system_enable.IsChecked.Value);
+        //    m_twitchFile.WriteValue("TwitchVotingChanceSystemRetainChance", twitch_user_chance_system_retain_chance_enable.IsChecked.Value);
+        //    m_twitchFile.WriteValue("TwitchRandomEffectVoteableEnable", twitch_user_random_voteable_enable.IsOn);
+        //    m_twitchFile.WriteValue("TwitchPermittedUsernames", twitch_permitted_usernames.Text);
 
-            m_twitchFile.WriteFile();
-        }
+        //    m_twitchFile.WriteFile();
+        //}
 
         private void ParseEffectsFile()
         {
@@ -346,34 +365,27 @@ namespace ConfigApp
             
         }
 
-        void InitTwitchTab()
-        {
-            TwitchTabHandleAgreed();
-        }
+        //void InitTwitchTab()
+        //{
+        //    TwitchTabHandleAgreed();
+        //}
 
-        void TwitchTabHandleAgreed()
-        {
-            bool agreed = twitch_user_agreed.IsChecked.GetValueOrDefault();
+        //void TwitchTabHandleAgreed()
+        //{
+        //    bool agreed = twitch_user_agreed.IsOn.GetValueOrDefault();
 
-            twitch_user_channel_name_label.IsEnabled = agreed;
-            twitch_user_channel_name.IsEnabled = agreed;
-            twitch_user_channel_oauth_label.IsEnabled = agreed;
-            twitch_user_channel_oauth.IsEnabled = agreed;
-            twitch_user_user_name_label.IsEnabled = agreed;
-            twitch_user_user_name.IsEnabled = agreed;
-            twitch_user_effects_secs_before_chat_voting_label.IsEnabled = agreed;
-            twitch_user_effects_secs_before_chat_voting.IsEnabled = agreed;
-            twitch_user_overlay_mode_label.IsEnabled = agreed;
-            twitch_user_overlay_mode.IsEnabled = agreed;
-            twitch_user_chance_system_enable_label.IsEnabled = agreed;
-            twitch_user_chance_system_enable.IsEnabled = agreed;
-            twitch_user_chance_system_retain_chance_enable_label.IsEnabled = agreed;
-            twitch_user_chance_system_retain_chance_enable.IsEnabled = agreed;
-            twitch_user_random_voteable_enable.IsEnabled = agreed;
-            twitch_user_random_voteable_enable_label.IsEnabled = agreed;
-            twitch_permitted_usernames.IsEnabled = agreed;
-            twitch_permitted_usernames_label.IsEnabled = agreed;
-        }
+        //    twitch_user_channel_name.IsEnabled = agreed;
+        //    twitch_user_channel_oauth.IsEnabled = agreed;
+        //    twitch_user_user_name.IsEnabled = agreed;
+        //    twitch_user_effects_secs_before_chat_voting.IsEnabled = agreed;
+        //    twitch_user_overlay_mode.IsEnabled = agreed;
+        //    twitch_user_chance_system_enable_label.IsEnabled = agreed;
+        //    twitch_user_chance_system_enable.IsEnabled = agreed;
+        //    twitch_user_chance_system_retain_chance_enable_label.IsEnabled = agreed;
+        //    twitch_user_chance_system_retain_chance_enable.IsEnabled = agreed;
+        //    twitch_user_random_voteable_enable.IsEnabled = agreed;
+        //    twitch_permitted_usernames.IsEnabled = agreed;
+        //}
 
         private void OnlyNumbersPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
@@ -393,12 +405,12 @@ namespace ConfigApp
         private void user_save_Click(object sender, RoutedEventArgs e)
         {
             WriteConfigFile();
-            WriteTwitchFile();
+            //WriteTwitchFile();
             WriteEffectsFile();
 
             // Reload saved config to show the "new" (saved) settings
             ParseConfigFile();
-            ParseTwitchFile();
+            //ParseTwitchFile();
 
             MessageBox.Show("Saved config!\nMake sure to press CTRL + L in-game twice if mod is already running to reload the config.", "ChaosModV", MessageBoxButton.OK, MessageBoxImage.Information);
         }
@@ -419,11 +431,11 @@ namespace ConfigApp
 
                 if (result == MessageBoxResult.Yes)
                 {
-                    m_twitchFile.ResetFile();
-                    ParseTwitchFile();
+                    //m_twitchFile.ResetFile();
+                    //ParseTwitchFile();
 
                     // Ensure all options are disabled in twitch tab again
-                    TwitchTabHandleAgreed();
+                    //TwitchTabHandleAgreed();
                 }
 
                 Init();
@@ -434,7 +446,7 @@ namespace ConfigApp
 
         private void twitch_user_agreed_Clicked(object sender, RoutedEventArgs e)
         {
-            TwitchTabHandleAgreed();
+            //TwitchTabHandleAgreed();
         }
 
         private void effect_user_config_Click(object sender, RoutedEventArgs e)
@@ -504,6 +516,13 @@ namespace ConfigApp
             {
                 (sender as ScrollViewer).ScrollToTop();
             }
+        }
+
+        private void twitch_user_channel_oauth_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (sender is null)
+                return;
+            ViewModel.TwitchChannelOAuth = (sender as PasswordBox).Password;
         }
     }
 }
