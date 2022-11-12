@@ -197,26 +197,26 @@
                         </Grid.RowDefinitions>
 
                         <ui:NumberBox ui:ControlHelper.Header="How often should a new effect start (in seconds)?"
-                                      x:Name="misc_user_effects_spawn_dur"
+                                      x:Name="misc_user_effects_spawn_dur" Value="{Binding NewEffectSpawnTime, Mode=TwoWay}"
                                       Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='0,r,9'}"
                                       Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='0,c,9'}"/>
 
                         <ui:NumberBox ui:ControlHelper.Header="How long should timed effects last (in seconds)?"
-                                      x:Name="misc_user_effects_timed_dur"
+                                      x:Name="misc_user_effects_timed_dur" Value="{Binding EffectTimedDur, Mode=TwoWay}"
                                       Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='1,r,9'}"
                                       Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='1,c,9'}"/>
 
                         <ui:NumberBox ui:ControlHelper.Header="How long should short timed effects last (in seconds)?"
-                                      x:Name="misc_user_effects_timed_short_dur"
+                                      x:Name="misc_user_effects_timed_short_dur" Value="{Binding EffectTimedShortDur, Mode=TwoWay}"
                                       Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='2,r,9'}"
                                       Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='2,c,9'}"/>
 
                         <ui:NumberBox ui:ControlHelper.Header="Random Seed (Leave empty for random seed every time)"
-                                      x:Name="misc_user_effects_random_seed"
+                                      x:Name="misc_user_effects_random_seed" Text="{Binding Seed, Mode=TwoWay}"
                                       Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='3,r,9'}"
                                       Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='3,c,9'}"/>
 
-                        <ui:NumberBox x:Name="misc_user_effects_max_running_effects"
+                        <ui:NumberBox x:Name="misc_user_effects_max_running_effects" Value="{Binding MaxParallelRunningEffects, Mode=TwoWay}"
                                       Maximum="99" ui:ControlHelper.Header="Max amount of simultaneously running effects"
                                       Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='4,r,9'}"
                                       Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='4,c,9'}"/>
@@ -227,7 +227,7 @@
                             <Label Content="Timer Bar Color"/>
                             <xctk:ColorPicker Name="misc_user_effects_timer_color"
                                               Width="60" Height="25" HorizontalAlignment="Left"
-                                              SelectedColor="#4040FF" ShowStandardColors="False" UsingAlphaChannel="False" />
+                                              SelectedColor="{Binding EffectTimerColor, Mode=TwoWay}" ShowStandardColors="False" UsingAlphaChannel="False" />
                         </StackPanel>
 
                         <StackPanel Orientation="Vertical"
@@ -236,7 +236,7 @@
                             <Label Content="Effect Text Color"/>
                             <xctk:ColorPicker x:Name="misc_user_effects_text_color"
                                               Width="60" Height="25" HorizontalAlignment="Left"
-                                              SelectedColor="#FFFFFF" ShowStandardColors="False" UsingAlphaChannel="False"/>
+                                              SelectedColor="{Binding EffectTextColor, Mode=TwoWay}" ShowStandardColors="False" UsingAlphaChannel="False"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Vertical"
@@ -245,53 +245,60 @@
                             <Label Content="Effect Timer Bar Color"/>
                             <xctk:ColorPicker x:Name="misc_user_effects_effect_timer_color"
                                               Width="60" Height="25" HorizontalAlignment="Left"
-                                              SelectedColor="#B4B4B4" ShowStandardColors="False" UsingAlphaChannel="False" />
+                                              SelectedColor="{Binding EffectTimedTimerColor, Mode=TwoWay}" ShowStandardColors="False" UsingAlphaChannel="False" />
                         </StackPanel>
 
                         <ui:ToggleSwitch x:Name="misc_user_effects_disable_startup"
                                          ui:ControlHelper.Header="Disable mod on startup by default"
                                          OnContent="Disable mod on startup"
                                          OffContent="Enable mod on startup"
+                                         IsOn="{Binding DisableStartup, Mode=TwoWay}"
                                          Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='8,r,9'}"
                                          Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='8,c,9'}"/>
 
                         <ui:ToggleSwitch x:Name="misc_user_effects_drawtimer_disable"
                                          ui:ControlHelper.Header="Don't draw timer bar"
+                                         IsOn="{Binding DisableTimerBarDraw, Mode=TwoWay}"
                                          OffContent="Timer bar visible"
                                          OnContent="Timer bar disabled"
-                                      Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='9,r,9'}"
-                                      Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='9,c,9'}"/>
+                                         Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='9,r,9'}"
+                                         Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='9,c,9'}"/>
                         
                         <ui:ToggleSwitch x:Name="misc_user_effects_drawtext_disable"
                                          ui:ControlHelper.Header="Don't draw effect text"
+                                         IsOn="{Binding DisableEffectTextDraw, Mode=TwoWay}"
                                          OffContent="Effect text visible"
                                          OnContent="Effect text disabled"
-                                      Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='10,r,9'}"
-                                      Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='10,c,9'}"/>
+                                         Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='10,r,9'}"
+                                         Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='10,c,9'}"/>
                         
                         <ui:ToggleSwitch x:Name="misc_user_effects_clear_enable"
                                          ui:ControlHelper.Header="Enable clear active effects shortcut (CTRL + -)"
+                                         IsOn="{Binding EnableClearEffectsShortcut, Mode=TwoWay}"
                                          OffContent="Shortcut disabled"
                                          OnContent="Shortcut enabled"
-                                      Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='11,r,9'}"
-                                      Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='11,c,9'}"/>
+                                         Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='11,r,9'}"
+                                         Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='11,c,9'}"/>
                         
                         <ui:ToggleSwitch x:Name="misc_user_toggle_mod_shortcut"
                                          ui:ControlHelper.Header="Enable toggle mod shortcut (CTRL + L)"
+                                         IsOn="{Binding EnableToggleModShortcut, Mode=TwoWay}"
                                          OffContent="Shortcut disabled"
                                          OnContent="Shortcut enabled"
-                                      Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='12,r,9'}"
-                                      Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='12,c,9'}"/>
+                                         Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='12,r,9'}"
+                                         Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='12,c,9'}"/>
                         
                         <ui:ToggleSwitch x:Name="misc_user_effects_menu_enable"
                                          ui:ControlHelper.Header="Enable effects menu (allows you to choose effects manually, CTRL + ,)"
+                                         IsOn="{Binding EnableDebugMenu, Mode=TwoWay}"
                                          OffContent="Shortcut disabled"
                                          OnContent="Shortcut enabled"
-                                      Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='13,r,9'}"
-                                      Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='13,c,9'}"/>
+                                         Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='13,r,9'}"
+                                         Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='13,c,9'}"/>
                         
                         <ui:ToggleSwitch x:Name="misc_user_effects_timer_pause_shortcut_enable"
                                          ui:ControlHelper.Header="Enable pause timer shortcut (CTRL + .)"
+                                         IsOn="{Binding EnablePauseTimerShortcut, Mode=TwoWay}"
                                          OffContent="Shortcut disabled"
                                          OnContent="Shortcut enabled"
                                          Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='14,r,9'}"
@@ -299,6 +306,7 @@
                         
                         <ui:ToggleSwitch x:Name="misc_user_anti_softlock_shortcut"
                                          ui:ControlHelper.Header="Enable black screen softlock prevention shortcut (CTRL + SHIFT + K)"
+                                         IsOn="{Binding EnableAntiSoftlockShortcut, Mode=TwoWay}"
                                          OffContent="Shortcut disabled"
                                          OnContent="Shortcut enabled"
                                          Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='15,r,9'}"
@@ -306,13 +314,15 @@
                         
                         <ui:ToggleSwitch x:Name="misc_user_effects_enable_group_weighting"
                                          ui:ControlHelper.Header="Enable effect group weighting (Recommended)"
+                                         IsOn="{Binding EnableGroupWeightingAdjustments, Mode=TwoWay}"
                                          OffContent="Effect group weighting enabled"
                                          OnContent="Effect grounp weighting disabled" 
-                                      Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='16,r,9'}"
-                                      Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='16,c,9'}"/>
+                                         Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='16,r,9'}"
+                                         Grid.Column="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='16,c,9'}"/>
                         
                         <ui:ToggleSwitch x:Name="misc_user_effects_enable_failsafe"
                                          ui:ControlHelper.Header="Allow prevention of repetitive mission fails (Failsafe)"
+                                         IsOn="{Binding EnableFailsafe, Mode=TwoWay}"
                                          OffContent="Mission failsafe disallowed"
                                          OnContent="Mission failsafe allowed" 
                                          Grid.Row="{Binding ListingTwoRow, Converter={StaticResource rcSplit}, ConverterParameter='17,r,9'}"

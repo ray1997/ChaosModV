@@ -19,7 +19,6 @@ namespace ConfigApp
     {
         private bool m_initializedTitle = false;
         
-        private OptionsFile m_configFile = new OptionsFile("config.ini");
         private OptionsFile m_effectsFile = new OptionsFile("effects.ini");
 
         private Dictionary<string, TreeMenuItem> m_treeMenuItemsMap;
@@ -41,7 +40,7 @@ namespace ConfigApp
                 Title += " (v" + Info.VERSION + ")";
             }
 
-            ParseConfigFile();
+            //ParseConfigFile();
             //ParseTwitchFile();
 
             InitEffectsTreeView();
@@ -112,76 +111,76 @@ namespace ConfigApp
             return effectData;
         }
 
-        private void ParseConfigFile()
-        {
-            m_configFile.ReadFile();
+        //private void ParseConfigFile()
+        //{
+        //    m_configFile.ReadFile();
 
-            misc_user_effects_spawn_dur.Text = m_configFile.ReadValue("NewEffectSpawnTime", "30");
-            misc_user_effects_timed_dur.Text = m_configFile.ReadValue("EffectTimedDur", "90");
-            misc_user_effects_random_seed.Text = m_configFile.ReadValue("Seed");
-            misc_user_effects_timed_short_dur.Text = m_configFile.ReadValue("EffectTimedShortDur", "30");
-            misc_user_effects_clear_enable.IsOn = m_configFile.ReadValueBool("EnableClearEffectsShortcut", true);
-            misc_user_effects_drawtimer_disable.IsOn = m_configFile.ReadValueBool("DisableTimerBarDraw", false);
-            misc_user_effects_drawtext_disable.IsOn = m_configFile.ReadValueBool("DisableEffectTextDraw", false);
-            misc_user_toggle_mod_shortcut.IsOn = m_configFile.ReadValueBool("EnableToggleModShortcut", true);
-            misc_user_effects_menu_enable.IsOn = m_configFile.ReadValueBool("EnableDebugMenu", false);
-            misc_user_effects_timer_pause_shortcut_enable.IsOn = m_configFile.ReadValueBool("EnablePauseTimerShortcut", false);
-            misc_user_effects_max_running_effects.Text = m_configFile.ReadValue("MaxParallelRunningEffects", "99");
-            if (m_configFile.HasKey("EffectTimerColor"))
-            {
-                misc_user_effects_timer_color.SelectedColor = (Color)ColorConverter.ConvertFromString(m_configFile.ReadValue("EffectTimerColor"));
-            }
-            if (m_configFile.HasKey("EffectTextColor"))
-            {
-                misc_user_effects_text_color.SelectedColor = (Color)ColorConverter.ConvertFromString(m_configFile.ReadValue("EffectTextColor"));
-            }
-            if (m_configFile.HasKey("EffectTimedTimerColor"))
-            {
-                misc_user_effects_effect_timer_color.SelectedColor = (Color)ColorConverter.ConvertFromString(m_configFile.ReadValue("EffectTimedTimerColor"));
-            }
-            misc_user_effects_disable_startup.IsOn = m_configFile.ReadValueBool("DisableStartup", false);
-            misc_user_effects_enable_group_weighting.IsOn = m_configFile.ReadValueBool("EnableGroupWeightingAdjustments", true);
-            misc_user_effects_enable_failsafe.IsOn = m_configFile.ReadValueBool("EnableFailsafe", true);
-            misc_user_anti_softlock_shortcut.IsOn = m_configFile.ReadValueBool("EnableAntiSoftlockShortcut", true);
+        //    misc_user_effects_spawn_dur.Text = m_configFile.ReadValue("NewEffectSpawnTime", "30");
+        //    misc_user_effects_timed_dur.Text = m_configFile.ReadValue("EffectTimedDur", "90");
+        //    misc_user_effects_random_seed.Text = m_configFile.ReadValue("Seed");
+        //    misc_user_effects_timed_short_dur.Text = m_configFile.ReadValue("EffectTimedShortDur", "30");
+        //    misc_user_effects_clear_enable.IsOn = m_configFile.ReadValueBool("EnableClearEffectsShortcut", true);
+        //    misc_user_effects_drawtimer_disable.IsOn = m_configFile.ReadValueBool("DisableTimerBarDraw", false);
+        //    misc_user_effects_drawtext_disable.IsOn = m_configFile.ReadValueBool("DisableEffectTextDraw", false);
+        //    misc_user_toggle_mod_shortcut.IsOn = m_configFile.ReadValueBool("EnableToggleModShortcut", true);
+        //    misc_user_effects_menu_enable.IsOn = m_configFile.ReadValueBool("EnableDebugMenu", false);
+        //    misc_user_effects_timer_pause_shortcut_enable.IsOn = m_configFile.ReadValueBool("EnablePauseTimerShortcut", false);
+        //    misc_user_effects_max_running_effects.Text = m_configFile.ReadValue("MaxParallelRunningEffects", "99");
+        //    if (m_configFile.HasKey("EffectTimerColor"))
+        //    {
+        //        misc_user_effects_timer_color.SelectedColor = (Color)ColorConverter.ConvertFromString(m_configFile.ReadValue("EffectTimerColor"));
+        //    }
+        //    if (m_configFile.HasKey("EffectTextColor"))
+        //    {
+        //        misc_user_effects_text_color.SelectedColor = (Color)ColorConverter.ConvertFromString(m_configFile.ReadValue("EffectTextColor"));
+        //    }
+        //    if (m_configFile.HasKey("EffectTimedTimerColor"))
+        //    {
+        //        misc_user_effects_effect_timer_color.SelectedColor = (Color)ColorConverter.ConvertFromString(m_configFile.ReadValue("EffectTimedTimerColor"));
+        //    }
+        //    misc_user_effects_disable_startup.IsOn = m_configFile.ReadValueBool("DisableStartup", false);
+        //    misc_user_effects_enable_group_weighting.IsOn = m_configFile.ReadValueBool("EnableGroupWeightingAdjustments", true);
+        //    misc_user_effects_enable_failsafe.IsOn = m_configFile.ReadValueBool("EnableFailsafe", true);
+        //    misc_user_anti_softlock_shortcut.IsOn = m_configFile.ReadValueBool("EnableAntiSoftlockShortcut", true);
 
-            // Meta Effects
-            meta_effects_spawn_dur.Text = m_configFile.ReadValue("NewMetaEffectSpawnTime", "600");
-            meta_effects_timed_dur.Text = m_configFile.ReadValue("MetaEffectDur", "95");
-            meta_effects_short_timed_dur.Text = m_configFile.ReadValue("MetaShortEffectDur", "65");
-        }
+        //    // Meta Effects
+        //    meta_effects_spawn_dur.Text = m_configFile.ReadValue("NewMetaEffectSpawnTime", "600");
+        //    meta_effects_timed_dur.Text = m_configFile.ReadValue("MetaEffectDur", "95");
+        //    meta_effects_short_timed_dur.Text = m_configFile.ReadValue("MetaShortEffectDur", "65");
+        //}
 
-        private void WriteConfigFile()
-        {
-            m_configFile.WriteValue("NewEffectSpawnTime", misc_user_effects_spawn_dur.Text);
-            m_configFile.WriteValue("EffectTimedDur", misc_user_effects_timed_dur.Text);
-            m_configFile.WriteValue("Seed", misc_user_effects_random_seed.Text);
-            m_configFile.WriteValue("EffectTimedShortDur", misc_user_effects_timed_short_dur.Text);
-            m_configFile.WriteValue("EnableClearEffectsShortcut", misc_user_effects_clear_enable.IsOn);
-            m_configFile.WriteValue("DisableTimerBarDraw", misc_user_effects_drawtimer_disable.IsOn);
-            m_configFile.WriteValue("DisableEffectTextDraw", misc_user_effects_drawtext_disable.IsOn);
-            m_configFile.WriteValue("EnableToggleModShortcut", misc_user_toggle_mod_shortcut.IsOn);
-            m_configFile.WriteValue("EnableDebugMenu", misc_user_effects_menu_enable.IsOn);
-            m_configFile.WriteValue("EnablePauseTimerShortcut", misc_user_effects_timer_pause_shortcut_enable.IsOn);
-            m_configFile.WriteValue("EffectTimerColor", misc_user_effects_timer_color.SelectedColor.ToString());
-            m_configFile.WriteValue("EffectTextColor", misc_user_effects_text_color.SelectedColor.ToString());
-            m_configFile.WriteValue("EffectTimedTimerColor", misc_user_effects_effect_timer_color.SelectedColor.ToString());
-            m_configFile.WriteValue("DisableStartup", misc_user_effects_disable_startup.IsOn);
-            m_configFile.WriteValue("EnableGroupWeightingAdjustments", misc_user_effects_enable_group_weighting.IsOn);
-            m_configFile.WriteValue("EnableFailsafe", misc_user_effects_enable_failsafe.IsOn);
-            int runningEffects;
-            if (int.TryParse(misc_user_effects_max_running_effects.Text, out runningEffects) && runningEffects > 0)
-            {
-                m_configFile.WriteValue("MaxParallelRunningEffects", misc_user_effects_max_running_effects.Text);
-            }
-            m_configFile.WriteValue("EnableAntiSoftlockShortcut", misc_user_anti_softlock_shortcut.IsOn);
+        //private void WriteConfigFile()
+        //{
+        //    m_configFile.WriteValue("NewEffectSpawnTime", misc_user_effects_spawn_dur.Text);
+        //    m_configFile.WriteValue("EffectTimedDur", misc_user_effects_timed_dur.Text);
+        //    m_configFile.WriteValue("Seed", misc_user_effects_random_seed.Text);
+        //    m_configFile.WriteValue("EffectTimedShortDur", misc_user_effects_timed_short_dur.Text);
+        //    m_configFile.WriteValue("EnableClearEffectsShortcut", misc_user_effects_clear_enable.IsOn);
+        //    m_configFile.WriteValue("DisableTimerBarDraw", misc_user_effects_drawtimer_disable.IsOn);
+        //    m_configFile.WriteValue("DisableEffectTextDraw", misc_user_effects_drawtext_disable.IsOn);
+        //    m_configFile.WriteValue("EnableToggleModShortcut", misc_user_toggle_mod_shortcut.IsOn);
+        //    m_configFile.WriteValue("EnableDebugMenu", misc_user_effects_menu_enable.IsOn);
+        //    m_configFile.WriteValue("EnablePauseTimerShortcut", misc_user_effects_timer_pause_shortcut_enable.IsOn);
+        //    m_configFile.WriteValue("EffectTimerColor", misc_user_effects_timer_color.SelectedColor.ToString());
+        //    m_configFile.WriteValue("EffectTextColor", misc_user_effects_text_color.SelectedColor.ToString());
+        //    m_configFile.WriteValue("EffectTimedTimerColor", misc_user_effects_effect_timer_color.SelectedColor.ToString());
+        //    m_configFile.WriteValue("DisableStartup", misc_user_effects_disable_startup.IsOn);
+        //    m_configFile.WriteValue("EnableGroupWeightingAdjustments", misc_user_effects_enable_group_weighting.IsOn);
+        //    m_configFile.WriteValue("EnableFailsafe", misc_user_effects_enable_failsafe.IsOn);
+        //    int runningEffects;
+        //    if (int.TryParse(misc_user_effects_max_running_effects.Text, out runningEffects) && runningEffects > 0)
+        //    {
+        //        m_configFile.WriteValue("MaxParallelRunningEffects", misc_user_effects_max_running_effects.Text);
+        //    }
+        //    m_configFile.WriteValue("EnableAntiSoftlockShortcut", misc_user_anti_softlock_shortcut.IsOn);
 
-            // Meta Effects
-            m_configFile.WriteValue("NewMetaEffectSpawnTime", meta_effects_spawn_dur.Text);
-            m_configFile.WriteValue("MetaEffectDur", meta_effects_timed_dur.Text);
-            m_configFile.WriteValue("MetaShortEffectDur", meta_effects_short_timed_dur.Text);
+        //    // Meta Effects
+        //    m_configFile.WriteValue("NewMetaEffectSpawnTime", meta_effects_spawn_dur.Text);
+        //    m_configFile.WriteValue("MetaEffectDur", meta_effects_timed_dur.Text);
+        //    m_configFile.WriteValue("MetaShortEffectDur", meta_effects_short_timed_dur.Text);
             
-            m_configFile.WriteFile();
-        }
+        //    m_configFile.WriteFile();
+        //}
 
         //private void ParseTwitchFile()
         //{
@@ -404,14 +403,16 @@ namespace ConfigApp
 
         private void user_save_Click(object sender, RoutedEventArgs e)
         {
-            WriteConfigFile();
+            //TODO:Turn this to relaycommand
+            //WriteConfigFile();
             //WriteTwitchFile();
             WriteEffectsFile();
 
             // Reload saved config to show the "new" (saved) settings
-            ParseConfigFile();
+            //ParseConfigFile();
             //ParseTwitchFile();
 
+            //TODO:Turn this into in-app notification somehow
             MessageBox.Show("Saved config!\nMake sure to press CTRL + L in-game twice if mod is already running to reload the config.", "ChaosModV", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
@@ -422,7 +423,8 @@ namespace ConfigApp
 
             if (result == MessageBoxResult.Yes)
             {
-                m_configFile.ResetFile();
+                //TODO:Reset function relaycommand
+                //m_configFile.ResetFile();
 
                 m_effectsFile.ResetFile();
 
