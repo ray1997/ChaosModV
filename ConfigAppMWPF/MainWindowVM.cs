@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using ModernWpf.Controls;
 using System.Net.Http;
+using System.Windows;
 using System.Windows.Media;
 
 namespace ConfigApp
@@ -12,6 +13,7 @@ namespace ConfigApp
             CheckForUpdates();
         }
 
+        #region Update check
         private bool? isModUpToDate;
         public bool? IsModUpToDate
         {
@@ -89,5 +91,33 @@ namespace ConfigApp
                 IsModUpToDate = null;
             }
         }
+        #endregion
+
+        #region Misc page sizing
+        private bool listingTwoRow = false;
+        public bool ListingTwoRow
+        {
+            get => listingTwoRow;
+            set
+            {
+                if (SetProperty(ref listingTwoRow, value))
+                {
+                    OnPropertyChanged(nameof(SecondColumnSize));
+                }
+            }
+        }
+
+        public GridLength SecondColumnSize
+        {
+            get
+            {
+                if (ListingTwoRow)
+                {
+                    return new GridLength(1, GridUnitType.Star);
+                }
+                return new GridLength(0, GridUnitType.Pixel);
+            }
+        }
+        #endregion
     }
 }

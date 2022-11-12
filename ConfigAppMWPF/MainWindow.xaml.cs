@@ -101,12 +101,12 @@ namespace ConfigApp
             misc_user_effects_timed_dur.Text = m_configFile.ReadValue("EffectTimedDur", "90");
             misc_user_effects_random_seed.Text = m_configFile.ReadValue("Seed");
             misc_user_effects_timed_short_dur.Text = m_configFile.ReadValue("EffectTimedShortDur", "30");
-            misc_user_effects_clear_enable.IsChecked = m_configFile.ReadValueBool("EnableClearEffectsShortcut", true);
-            misc_user_effects_drawtimer_disable.IsChecked = m_configFile.ReadValueBool("DisableTimerBarDraw", false);
-            misc_user_effects_drawtext_disable.IsChecked = m_configFile.ReadValueBool("DisableEffectTextDraw", false);
-            misc_user_toggle_mod_shortcut.IsChecked = m_configFile.ReadValueBool("EnableToggleModShortcut", true);
-            misc_user_effects_menu_enable.IsChecked = m_configFile.ReadValueBool("EnableDebugMenu", false);
-            misc_user_effects_timer_pause_shortcut_enable.IsChecked = m_configFile.ReadValueBool("EnablePauseTimerShortcut", false);
+            misc_user_effects_clear_enable.IsOn = m_configFile.ReadValueBool("EnableClearEffectsShortcut", true);
+            misc_user_effects_drawtimer_disable.IsOn = m_configFile.ReadValueBool("DisableTimerBarDraw", false);
+            misc_user_effects_drawtext_disable.IsOn = m_configFile.ReadValueBool("DisableEffectTextDraw", false);
+            misc_user_toggle_mod_shortcut.IsOn = m_configFile.ReadValueBool("EnableToggleModShortcut", true);
+            misc_user_effects_menu_enable.IsOn = m_configFile.ReadValueBool("EnableDebugMenu", false);
+            misc_user_effects_timer_pause_shortcut_enable.IsOn = m_configFile.ReadValueBool("EnablePauseTimerShortcut", false);
             misc_user_effects_max_running_effects.Text = m_configFile.ReadValue("MaxParallelRunningEffects", "99");
             if (m_configFile.HasKey("EffectTimerColor"))
             {
@@ -120,10 +120,10 @@ namespace ConfigApp
             {
                 misc_user_effects_effect_timer_color.SelectedColor = (Color)ColorConverter.ConvertFromString(m_configFile.ReadValue("EffectTimedTimerColor"));
             }
-            misc_user_effects_disable_startup.IsChecked = m_configFile.ReadValueBool("DisableStartup", false);
-            misc_user_effects_enable_group_weighting.IsChecked = m_configFile.ReadValueBool("EnableGroupWeightingAdjustments", true);
-            misc_user_effects_enable_failsafe.IsChecked = m_configFile.ReadValueBool("EnableFailsafe", true);
-            misc_user_anti_softlock_shortcut.IsChecked = m_configFile.ReadValueBool("EnableAntiSoftlockShortcut", true);
+            misc_user_effects_disable_startup.IsOn = m_configFile.ReadValueBool("DisableStartup", false);
+            misc_user_effects_enable_group_weighting.IsOn = m_configFile.ReadValueBool("EnableGroupWeightingAdjustments", true);
+            misc_user_effects_enable_failsafe.IsOn = m_configFile.ReadValueBool("EnableFailsafe", true);
+            misc_user_anti_softlock_shortcut.IsOn = m_configFile.ReadValueBool("EnableAntiSoftlockShortcut", true);
 
             // Meta Effects
             meta_effects_spawn_dur.Text = m_configFile.ReadValue("NewMetaEffectSpawnTime", "600");
@@ -137,24 +137,24 @@ namespace ConfigApp
             m_configFile.WriteValue("EffectTimedDur", misc_user_effects_timed_dur.Text);
             m_configFile.WriteValue("Seed", misc_user_effects_random_seed.Text);
             m_configFile.WriteValue("EffectTimedShortDur", misc_user_effects_timed_short_dur.Text);
-            m_configFile.WriteValue("EnableClearEffectsShortcut", misc_user_effects_clear_enable.IsChecked.Value);
-            m_configFile.WriteValue("DisableTimerBarDraw", misc_user_effects_drawtimer_disable.IsChecked.Value);
-            m_configFile.WriteValue("DisableEffectTextDraw", misc_user_effects_drawtext_disable.IsChecked.Value);
-            m_configFile.WriteValue("EnableToggleModShortcut", misc_user_toggle_mod_shortcut.IsChecked.Value);
-            m_configFile.WriteValue("EnableDebugMenu", misc_user_effects_menu_enable.IsChecked.Value);
-            m_configFile.WriteValue("EnablePauseTimerShortcut", misc_user_effects_timer_pause_shortcut_enable.IsChecked.Value);
+            m_configFile.WriteValue("EnableClearEffectsShortcut", misc_user_effects_clear_enable.IsOn);
+            m_configFile.WriteValue("DisableTimerBarDraw", misc_user_effects_drawtimer_disable.IsOn);
+            m_configFile.WriteValue("DisableEffectTextDraw", misc_user_effects_drawtext_disable.IsOn);
+            m_configFile.WriteValue("EnableToggleModShortcut", misc_user_toggle_mod_shortcut.IsOn);
+            m_configFile.WriteValue("EnableDebugMenu", misc_user_effects_menu_enable.IsOn);
+            m_configFile.WriteValue("EnablePauseTimerShortcut", misc_user_effects_timer_pause_shortcut_enable.IsOn);
             m_configFile.WriteValue("EffectTimerColor", misc_user_effects_timer_color.SelectedColor.ToString());
             m_configFile.WriteValue("EffectTextColor", misc_user_effects_text_color.SelectedColor.ToString());
             m_configFile.WriteValue("EffectTimedTimerColor", misc_user_effects_effect_timer_color.SelectedColor.ToString());
-            m_configFile.WriteValue("DisableStartup", misc_user_effects_disable_startup.IsChecked.Value);
-            m_configFile.WriteValue("EnableGroupWeightingAdjustments", misc_user_effects_enable_group_weighting.IsChecked.Value);
-            m_configFile.WriteValue("EnableFailsafe", misc_user_effects_enable_failsafe.IsChecked.Value);
+            m_configFile.WriteValue("DisableStartup", misc_user_effects_disable_startup.IsOn);
+            m_configFile.WriteValue("EnableGroupWeightingAdjustments", misc_user_effects_enable_group_weighting.IsOn);
+            m_configFile.WriteValue("EnableFailsafe", misc_user_effects_enable_failsafe.IsOn);
             int runningEffects;
             if (int.TryParse(misc_user_effects_max_running_effects.Text, out runningEffects) && runningEffects > 0)
             {
                 m_configFile.WriteValue("MaxParallelRunningEffects", misc_user_effects_max_running_effects.Text);
             }
-            m_configFile.WriteValue("EnableAntiSoftlockShortcut", misc_user_anti_softlock_shortcut.IsChecked.Value);
+            m_configFile.WriteValue("EnableAntiSoftlockShortcut", misc_user_anti_softlock_shortcut.IsOn);
 
             // Meta Effects
             m_configFile.WriteValue("NewMetaEffectSpawnTime", meta_effects_spawn_dur.Text);
@@ -495,22 +495,15 @@ namespace ConfigApp
         {
             System.Diagnostics.Process.Start("https://discord.gg/w2tDeKVaF9");
         }
-    }
 
-    public class BoolToVisibilityConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        private void RowListingUpdate(object sender, SizeChangedEventArgs e)
         {
-            if (value is bool b)
+            ViewModel.ListingTwoRow = e.NewSize.Width > 720;
+            //Scroll to top on size chage
+            if (ViewModel.ListingTwoRow)
             {
-                return b ? Visibility.Visible : Visibility.Collapsed;
+                (sender as ScrollViewer).ScrollToTop();
             }
-            return Visibility.Collapsed;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
         }
     }
 }
