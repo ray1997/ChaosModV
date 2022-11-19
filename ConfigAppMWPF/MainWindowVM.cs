@@ -524,6 +524,47 @@ namespace ConfigApp
             }
             set => SetProperty(ref enableFailsafe, value);
         }
+
+        //Meta configs
+        private int? newMetaEffectSpawnTime = null;
+        public int NewMetaEffectSpawnTime
+        {
+            get
+            {
+                if (newMetaEffectSpawnTime is null)
+                    newMetaEffectSpawnTime = GetConfigInt(600);
+                return newMetaEffectSpawnTime.Value;
+            }
+            set => SetProperty(ref newMetaEffectSpawnTime, value);
+        }
+
+        private int? metaEffectDur = null;
+        public int MetaEffectDur
+        {
+            get
+            {
+                if (metaEffectDur is null)
+                    metaEffectDur = GetConfigInt(95);
+                return metaEffectDur.Value;
+            }
+            set => SetProperty(ref metaEffectDur, value);
+        }
+
+        private int? metaShortEffectDur = null;
+        public int MetaShortEffectDur
+        {
+            get
+            {
+                if (metaShortEffectDur is null)
+                    metaShortEffectDur = GetConfigInt(65);
+                return metaShortEffectDur.Value;
+            }
+            set => SetProperty(ref metaShortEffectDur, value);
+        }
+        #endregion
+
+        #region Effects page
+
         #endregion
     }
 }

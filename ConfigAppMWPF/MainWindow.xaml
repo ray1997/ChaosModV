@@ -157,33 +157,38 @@
                                     <ColumnDefinition Width="auto" />
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="40" />
-                                    <RowDefinition Height="40" />
-                                    <RowDefinition Height="40" />
+                                    <RowDefinition Height="auto" />
+                                    <RowDefinition Height="auto" />
+                                    <RowDefinition Height="auto" />
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
 
-                                <TextBlock Text="How often should a new meta start (in seconds)?" Grid.Row="0" Grid.Column="0"
-                                           HorizontalAlignment="Right" VerticalAlignment="Center" />
-                                <TextBox x:Name="meta_effects_spawn_dur" Height="20" Width="60" Grid.Row="0" Grid.Column="2"
-                                         HorizontalAlignment="Left" VerticalAlignment="Center"
-                                         MaxLength="6" PreviewTextInput="OnlyNumbersPreviewTextInput"
-                                         CommandManager.PreviewExecuted="NoCopyPastePreviewExecuted" ContextMenu="{x:Null}"
-                                         Keyboard.PreviewKeyDown="NoSpacePreviewKeyDown" />
-                                <TextBlock Text="How long should meta effects last (in seconds)?" Grid.Row="1" Grid.Column="0"
-                                           HorizontalAlignment="Right" VerticalAlignment="Center" />
-                                <TextBox x:Name="meta_effects_timed_dur" Height="20" Width="60" Grid.Row="1" Grid.Column="2"
-                                         HorizontalAlignment="Left" VerticalAlignment="Center"
-                                         MaxLength="6" PreviewTextInput="OnlyNumbersPreviewTextInput"
-                                         CommandManager.PreviewExecuted="NoCopyPastePreviewExecuted" ContextMenu="{x:Null}"
-                                         Keyboard.PreviewKeyDown="NoSpacePreviewKeyDown" />
-                                <TextBlock Text="How long should short timed meta effects last (in seconds)?" Grid.Row="2" Grid.Column="0"
-                                           HorizontalAlignment="Right" VerticalAlignment="Center" />
-                                <TextBox x:Name="meta_effects_short_timed_dur" Height="20" Width="60" Grid.Row="2" Grid.Column="2"
-                                         HorizontalAlignment="Left" VerticalAlignment="Center"
-                                         MaxLength="6" PreviewTextInput="OnlyNumbersPreviewTextInput"
-                                         CommandManager.PreviewExecuted="NoCopyPastePreviewExecuted" ContextMenu="{x:Null}"
-                                         Keyboard.PreviewKeyDown="NoSpacePreviewKeyDown" />
+                                <Grid Grid.Row="0" Grid.Column="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="How often should a new meta start (in seconds)?" Grid.Column="0"/>
+                                    <ui:NumberBox Value="{Binding NewMetaEffectSpawnTime, Mode=TwoWay}" Grid.Column="1"/>
+                                </Grid>
+
+                                <Grid Grid.Row="1" Grid.Column="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="How long should meta effects last (in seconds)?" Grid.Column="0"/>
+                                    <ui:NumberBox Value="{Binding MetaEffectDur, Mode=TwoWay}" Grid.Column="1"/>
+                                </Grid>
+
+                                <Grid Grid.Row="2" Grid.Column="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="How long should short timed meta effects last (in seconds)?" Grid.Column="0"/>
+                                    <ui:NumberBox Value="{Binding MetaShortEffectDur, Mode=TwoWay}" Grid.Column="1"/>
+                                </Grid>
                             </Grid>
 
                             <Grid Grid.Column="1">
